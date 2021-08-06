@@ -1,6 +1,6 @@
 # Linear Regression
 
-Linear regression is a machine learning model that attempts to find the the linear relationship between one or more input variables _x1, x2, ..., xn_ and an output variable _y_. It finds a set of parameters _w0, w1, w2, ..., wn_ such that the predicted output _h(x) = w0 + w1 * x1 + ... + wn * xn_ is as close as possible to the real output _y_.
+Linear regression is a machine learning model that attempts to find the the linear relationship between one or more input variables _x1, x2, ..., xn_ and an output variable _y_. It finds a set of parameters _b, w1, w2, ..., wn_ such that the predicted output _h(x) = b + w1 * x1 + ... + wn * xn_ is as close as possible to the real output _y_.
 
 ## How to install it?
 
@@ -55,9 +55,31 @@ input := #(
 output := #(-10.6 10.5 -13.6 27.7 -24.1 12.3 -2.6 -0.2 12.2 -22.1 -10.5 -24.3 2.1 14.9 -11.8 3.3 1.3 -8.1 -16.1 -8.9).
 ```
 
-We want to find the linear relationship between the input and the output. In other words, we need to find such parameters _w0, w1, w2, w3_ that the line _h(x) = w0 + w1 * x1 + w2 * x2 + w3 * x3_ fits the data as closely as possible. To do that, we initialize a linear regression model and fit it to the data.
+We want to find the linear relationship between the input and the output. In other words, we need to find such parameters _b, w1, w2, w3_ that the line _h(x) = b + w1 * x1 + w2 * x2 + w3 * x3_ fits the data as closely as possible. To do that, we initialize a linear regression model and fit it to the data.
 
 ```Smalltalk
-model := AILinearRegression new.
+model := AILinearRegression new
+  learningRate: 0.001;
+  maxIterations: 2000;
+  yourself.
+	
 model fitX: input y: output.
+```
+
+Now we can look at the trained parameters. The real relationship between x and y is _y = 2*x1 + 10*x2 - x3_, so the parameters should be close to _b=0_, _w1=2_, _w2=10_, _w3=-1_.
+
+```Smalltalk
+b := model bias. "-0.0029744215186773065"
+w := model weights. "#(1.9999658061022905 9.972821149946537 -0.9998757756318858)"
+```
+
+Finally, we can use the model to predict the output for previously unseen input.
+
+```Smalltalk
+testInput := #(
+    (-3 0.43 1) 
+    (-3 -0.11 -7) 
+    (-6 0.06 -9) 
+    (-7 -0.41 7) 
+    (3 0.43 10)).
 ```
