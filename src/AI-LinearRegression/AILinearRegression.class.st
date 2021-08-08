@@ -6,7 +6,9 @@ Class {
 		'bias',
 		'costHistory',
 		'learningRate',
-		'maxIterations'
+		'maxIterations',
+		'normalizer',
+		'shouldNormalizeData'
 	],
 	#category : #'AI-LinearRegression'
 }
@@ -82,6 +84,9 @@ AILinearRegression >> initialize [
 	super initialize.
 	learningRate := self class defaultLearningRate.
 	maxIterations := self class defaultMaxIterations.
+	
+	shouldNormalizeData := true.
+	normalizer := self class defaultNormalizerClass new.
 ]
 
 { #category : #initialization }
@@ -118,11 +123,23 @@ AILinearRegression >> maxIterations: anObject [
 	maxIterations := anObject
 ]
 
+{ #category : #accessing }
+AILinearRegression >> normalizer: aNormalizer [
+
+	normalizer := aNormalizer.
+]
+
 { #category : #'as yet unclassified' }
 AILinearRegression >> predict: inputMatrix [
 	
 	^ inputMatrix collect: [ :row |
 		(row * weights) sum + bias ]
+]
+
+{ #category : #accessing }
+AILinearRegression >> shouldNormalizeData: aBoolean [
+
+	shouldNormalizeData := aBoolean
 ]
 
 { #category : #'as yet unclassified' }
