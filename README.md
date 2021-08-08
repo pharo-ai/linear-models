@@ -1,5 +1,9 @@
 # Linear Regression
 
+[![Build status](https://github.com/pharo-ai/linear-regression/workflows/CI/badge.svg)](https://github.com/pharo-ai/linear-regression/actions/workflows/test.yml)
+[![Coverage Status](https://coveralls.io/repos/github/pharo-ai/linear-regression/badge.svg?branch=master)](https://coveralls.io/github/pharo-ai/linear-regression?branch=master)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/pharo-ai/linear-regression/master/LICENSE)
+
 Linear regression is a machine learning model that attempts to find the the linear relationship between one or more input variables _x1, x2, ..., xn_ and an output variable _y_. It finds a set of parameters _b, w1, w2, ..., wn_ such that the predicted output _h(x) = b + w1 * x1 + ... + wn * xn_ is as close as possible to the real output _y_.
 
 ## How to install it?
