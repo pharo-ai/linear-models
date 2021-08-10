@@ -26,6 +26,12 @@ AILinearRegression class >> defaultMaxIterations [
 ]
 
 { #category : #accessing }
+AILinearRegression class >> defaultNormalizerClass [
+
+	^ AIMinMaxNormalizer
+]
+
+{ #category : #accessing }
 AILinearRegression >> bias [
 
 	^ bias
