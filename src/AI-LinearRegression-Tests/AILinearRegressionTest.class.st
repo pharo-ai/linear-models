@@ -7,7 +7,7 @@ Class {
 	#category : #'AI-LinearRegression-Tests'
 }
 
-{ #category : #initialization }
+{ #category : #running }
 AILinearRegressionTest >> setUp [
 	super setUp.
 	model := AILinearRegression new.

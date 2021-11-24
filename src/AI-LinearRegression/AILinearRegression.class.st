@@ -191,14 +191,14 @@ AILinearRegression >> shouldNormalizeData: aBoolean [
 { #category : #running }
 AILinearRegression >> updateX: inputMatrix y: targetVector [
 
-	| outputVector difference |
+	| predictedVector difference |
 	
-	outputVector := self predict: inputMatrix.
-	difference := targetVector - outputVector.
+	predictedVector := self predict: inputMatrix.
+	difference := targetVector - predictedVector.
 	
 	bias := bias + (2 * learningRate * difference sum).
-	
-	weights := weights + (2 * learningRate * ((1 to: targetVector size) sum: [ :i |
+
+	weights := weights + (2 * learningRate * ((1 to: targetVector size) sum: [ :i |	
 		(difference at: i) * (inputMatrix at: i) ])).
 ]
 
