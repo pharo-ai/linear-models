@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : #'AI-LinearRegression-Tests'
+	#category : #'AI-Regressions-Tests'
 }
 
 { #category : #running }

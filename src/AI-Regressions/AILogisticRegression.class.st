@@ -20,7 +20,7 @@ Class {
 	#instVars : [
 		'predictedY'
 	],
-	#category : #'AI-LogisticRegression'
+	#category : #'AI-Regressions-Logistic regression'
 }
 
 { #category : #running }

@@ -13,7 +13,7 @@ Class {
 		'shouldNormalizeData',
 		'weights'
 	],
-	#category : #'AI-LinearRegression'
+	#category : #'AI-Regressions-Core'
 }
 
 { #category : #accessing }
