@@ -40,16 +40,7 @@ output := #(-10.6 10.5 -13.6 27.7 -24.1 12.3 -2.6 -0.2 12.2 -22.1 -10.5 -24.3 2.
 "
 Class {
 	#name : #AILinearRegression,
-	#superclass : #Object,
-	#instVars : [
-		'weights',
-		'bias',
-		'costHistory',
-		'learningRate',
-		'maxIterations',
-		'normalizer',
-		'shouldNormalizeData'
-	],
+	#superclass : #AIAbstractRegression,
 	#category : #'AI-LinearRegression'
 }
 
@@ -69,110 +60,6 @@ AILinearRegression class >> defaultMaxIterations [
 AILinearRegression class >> defaultNormalizerClass [
 
 	^ AIMinMaxNormalizer
-]
-
-{ #category : #accessing }
-AILinearRegression >> bias [
-
-	^ bias
-]
-
-{ #category : #accessing }
-AILinearRegression >> costHistory [
-
-	^ costHistory
-]
-
-{ #category : #running }
-AILinearRegression >> costX: inputMatrix y: targetVector [
-
-	| outputVector |
-	outputVector := self predict: inputMatrix.
-	
-	^ (targetVector - outputVector) sum: [ :each | each ** 2 ].
-]
-
-{ #category : #api }
-AILinearRegression >> fitX: inputMatrix y: targetVector [
-
-	| iteration |
-	
-	self initializeWeightsOfSize: (inputMatrix anyOne size).
-	
-	costHistory := OrderedCollection new.
-	costHistory add: (self costX: inputMatrix y: targetVector).
-	
-	iteration := 1.
-	
-	[ self hasConverged or: [ iteration >= maxIterations ] ] whileFalse: [ 
-		self updateX: inputMatrix y: targetVector.
-		costHistory add: (self costX: inputMatrix y: targetVector).
-		iteration := iteration + 1 ].
-
-]
-
-{ #category : #testing }
-AILinearRegression >> hasConverged [
-
-	| precision |
-	
-	costHistory ifNil: [ ^ false ].
-	costHistory size < 2 ifTrue: [ ^ false ].
-	
-	precision := 1e-10.
-	
-	^ (costHistory last closeTo: 0 precision: precision) or: [
-		costHistory nextToLast closeTo: costHistory last precision: precision ]
-]
-
-{ #category : #initialization }
-AILinearRegression >> initialize [
-	super initialize.
-	learningRate := self class defaultLearningRate.
-	maxIterations := self class defaultMaxIterations.
-	
-	shouldNormalizeData := true.
-	normalizer := self class defaultNormalizerClass new.
-]
-
-{ #category : #initialization }
-AILinearRegression >> initializeWeightsOfSize: aNumber [
-
-	| rand |
-	rand := Random new.
-	
-	bias := rand next.
-	weights := (1 to: aNumber) collect: [ :i | rand next ].
-]
-
-{ #category : #accessing }
-AILinearRegression >> learningRate [
-
-	^ learningRate
-]
-
-{ #category : #accessing }
-AILinearRegression >> learningRate: anObject [
-
-	learningRate := anObject
-]
-
-{ #category : #accessing }
-AILinearRegression >> maxIterations [
-
-	^ maxIterations
-]
-
-{ #category : #accessing }
-AILinearRegression >> maxIterations: anObject [
-
-	maxIterations := anObject
-]
-
-{ #category : #accessing }
-AILinearRegression >> normalizer: aNormalizer [
-
-	normalizer := aNormalizer.
 ]
 
 { #category : #api }
@@ -200,10 +87,4 @@ AILinearRegression >> updateX: inputMatrix y: targetVector [
 
 	weights := weights + (2 * learningRate * ((1 to: targetVector size) sum: [ :i |	
 		(difference at: i) * (inputMatrix at: i) ])).
-]
-
-{ #category : #accessing }
-AILinearRegression >> weights [
-
-	^ weights
 ]
