@@ -1,3 +1,19 @@
+"
+Logistic regression is used to model the probability of a certain class or event existing such as pass/fail, win/lose, alive/dead or healthy/sick. This can be extended to model several classes of events such as determining whether an image contains a cat, dog, lion, etc. Each object being detected in the image would be assigned a probability between 0 and 1, with a sum of one. (Wikipedia).
+
+We use the sigmoid function to put the prediction values between 1 and 0
+h(z) = sigmoid( z ) = 1 / ( 1 + e( - z ) )
+
+z function is the weighted input
+z = xw + bias
+
+The cost function is
+J = - ylog( h(z) ) - ( 1 - y )log( 1 - h(z) )
+
+So, we need to minimize the error of the cost function. To do that, we derive the cost function according to the weights and the bias.
+
+See more information in the comments of the methods.
+"
 Class {
 	#name : #AILogisticRegression,
 	#superclass : #AILinearRegression,
