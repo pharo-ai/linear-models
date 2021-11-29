@@ -10,6 +10,12 @@ Class {
 	#category : #'AI-Regressions-Tests'
 }
 
+{ #category : #defaults }
+AILogisticRegressionTest >> generateRandomNumber: random betwwen: lowerBound and: higherBound [
+
+	^ lowerBound + (random next * (higherBound - lowerBound))
+]
+
 { #category : #running }
 AILogisticRegressionTest >> setUp [
 
@@ -58,12 +64,12 @@ AILogisticRegressionTest >> testExactFitTwoVariables [
 	
 	numIte timesRepeat: [ 
 		| x y |
-		y:= random nextIntegerBetween: 0 and: 20.
-		x:= random nextIntegerBetween: 0 and: 20.
+		y:= self generateRandomNumber: random betwwen: 0 and: 20. 
+		x:= self generateRandomNumber: random betwwen: 0 and: 20. 
 		inputPositive add: {x . y}.
 		
-		y:= random nextIntegerBetween: 0 and: 20.
-		x:= random nextIntegerBetween: 0 and: 20.
+		y:= self generateRandomNumber: random betwwen: 0 and: 20. 
+		x:= self generateRandomNumber: random betwwen: 0 and: 20. 
 		inputNegative add: {x negated . y negated} ].
 	
 	input := inputPositive , inputNegative.
