@@ -4,10 +4,10 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : #'AI-LinearRegression-Tests'
+	#category : #'AI-Regressions-Tests'
 }
 
-{ #category : #initialization }
+{ #category : #running }
 AILinearRegressionTest >> setUp [
 	super setUp.
 	model := AILinearRegression new.
