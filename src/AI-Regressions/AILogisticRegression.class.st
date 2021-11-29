@@ -16,10 +16,7 @@ See more information in the comments of the methods.
 "
 Class {
 	#name : #AILogisticRegression,
-	#superclass : #AILinearRegression,
-	#instVars : [
-		'predictedY'
-	],
+	#superclass : #AIAbstractRegression,
 	#category : #'AI-Regressions-Logistic regression'
 }
 

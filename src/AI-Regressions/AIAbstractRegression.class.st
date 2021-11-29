@@ -16,6 +16,24 @@ Class {
 	#category : #'AI-Regressions-Core'
 }
 
+{ #category : #'as yet unclassified' }
+AIAbstractRegression class >> defaultLearningRate [
+
+	^ 0.01
+]
+
+{ #category : #'as yet unclassified' }
+AIAbstractRegression class >> defaultMaxIterations [
+
+	^ 1000
+]
+
+{ #category : #accessing }
+AIAbstractRegression class >> defaultNormalizerClass [
+
+	^ AIMinMaxNormalizer
+]
+
 { #category : #accessing }
 AIAbstractRegression >> bias [
 
@@ -127,13 +145,19 @@ AIAbstractRegression >> normalizer: aNormalizer [
 	normalizer := aNormalizer.
 ]
 
-{ #category : #running }
+{ #category : #api }
 AIAbstractRegression >> predict: inputMatrix [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #api }
+{ #category : #accessing }
+AIAbstractRegression >> shouldNormalizeData: aBoolean [
+
+	shouldNormalizeData := aBoolean
+]
+
+{ #category : #running }
 AIAbstractRegression >> updateX: inputMatrix y: targetVector [
 
 	self subclassResponsibility

@@ -44,35 +44,11 @@ Class {
 	#category : #'AI-Regressions-Linear regression'
 }
 
-{ #category : #'as yet unclassified' }
-AILinearRegression class >> defaultLearningRate [
-
-	^ 0.01
-]
-
-{ #category : #'as yet unclassified' }
-AILinearRegression class >> defaultMaxIterations [
-
-	^ 1000
-]
-
-{ #category : #accessing }
-AILinearRegression class >> defaultNormalizerClass [
-
-	^ AIMinMaxNormalizer
-]
-
 { #category : #api }
 AILinearRegression >> predict: inputMatrix [
 	
 	^ inputMatrix collect: [ :row |
 		(row * weights) sum + bias ]
-]
-
-{ #category : #accessing }
-AILinearRegression >> shouldNormalizeData: aBoolean [
-
-	shouldNormalizeData := aBoolean
 ]
 
 { #category : #running }
