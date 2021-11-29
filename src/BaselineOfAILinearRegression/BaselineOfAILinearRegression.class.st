@@ -15,6 +15,6 @@ BaselineOfAILinearRegression >> baseline: spec [
 		
 		"Packages"
 		spec 
-			package: 'AI-LinearRegression' with: [ spec requires: #('AINormalization') ];
-			package: 'AI-LinearRegression-Tests' with: [ spec requires: #('AI-LinearRegression') ] ].
+			package: 'AI-Regressions' with: [ spec requires: #('AINormalization') ];
+			package: 'AI-Regressions-Tests' with: [ spec requires: #('AI-Regressions') ] ].
 ]
