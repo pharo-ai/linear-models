@@ -6,7 +6,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'bias',
-		'costHistory',
 		'maxIterations',
 		'learningRate',
 		'normalizer',
@@ -34,10 +33,25 @@ AIAbstractRegression class >> defaultNormalizerClass [
 	^ AIMinMaxNormalizer
 ]
 
+{ #category : #running }
+AIAbstractRegression >> activationFor: arg1 [ 
+	^ self subclassResponsibility
+]
+
 { #category : #accessing }
 AIAbstractRegression >> bias [
 
 	^ bias
+]
+
+{ #category : #running }
+AIAbstractRegression >> biasDerivative: arg1 [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #running }
+AIAbstractRegression >> costDerivative: arg1 target: arg2 [ 
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -115,6 +129,13 @@ AIAbstractRegression >> initializeWeightsOfSize: aNumber [
 	self initializeRandomWeightsOfSize: aNumber
 ]
 
+{ #category : #initialization }
+AIAbstractRegression >> initializeWeightsToZeroOfSize: aNumber [
+
+	bias := 0.
+	weights := (1 to: aNumber) collect: [ :each | 0 ]
+]
+
 { #category : #accessing }
 AIAbstractRegression >> learningRate [
 
@@ -158,9 +179,37 @@ AIAbstractRegression >> shouldNormalizeData: aBoolean [
 ]
 
 { #category : #running }
-AIAbstractRegression >> updateX: inputMatrix y: targetVector [
+AIAbstractRegression >> updateX: inputMatrix y: targetOutputVector [
 
-	self subclassResponsibility
+	| weightDerivative biasDerivative predictedOutputVector costDerivative |
+
+	predictedOutputVector := self activationFor: inputMatrix.
+
+	costDerivative := self costDerivative: predictedOutputVector target: targetOutputVector.
+	weightDerivative := self weightDerivativeforX: inputMatrix costDerivative: costDerivative.
+
+	biasDerivative := self biasDerivative: costDerivative.
+
+	weights := weights - (learningRate * weightDerivative).
+	bias := bias - (learningRate * biasDerivative)
+]
+
+{ #category : #running }
+AIAbstractRegression >> weightDerivativeforX: arg1 costDerivative: arg2 [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #running }
+AIAbstractRegression >> weightedSumOf: inputMatrix [
+
+	"z = Xw + b"
+	"As X is a matrix we need to multiplicate each of the rows, the rows are the data, with the weights.
+	Each of the rows has n size. n being the number of features.
+	After the multiplication of a row with all the weights, we need to sum all the elements and add the bias.
+	Then we return a vector of the same size of the original inputMatrix."
+
+	^ inputMatrix collect: [:row |
+		(row * weights) sum + bias ]
 ]
 
 { #category : #accessing }

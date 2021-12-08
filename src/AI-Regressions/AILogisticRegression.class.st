@@ -21,7 +21,24 @@ Class {
 }
 
 { #category : #running }
-AILogisticRegression >> biasDerivative: djdz [
+AILogisticRegression >> activationFor: inputMatrix [
+
+	"Activation function for logistic regression is the logistic function
+	which is a kind of sigmoid function"
+
+	"Sigmoid function: 1 / (1 + e ^ -z)
+	z = X*w + bias 
+	where X is the input matrix"
+
+	| weightedSumVector |
+	weightedSumVector := self weightedSumOf: inputMatrix.
+
+	^ weightedSumVector collect: [ :z | 
+		1 / (1 + (Float e raisedTo: z negated)) ]
+]
+
+{ #category : #running }
+AILogisticRegression >> biasDerivative: costDerivativeVector [
 
 	"J(w) = cost function"
 	"J = - ylog( h(x) ) - ( 1 - y )log( 1 - h(x) )"
@@ -30,11 +47,11 @@ AILogisticRegression >> biasDerivative: djdz [
 	"dJ/db = 1*dJ/dz "
 	"dJ/db = h(z) - y"
 	
-	^ djdz average
+	^ costDerivativeVector average
 ]
 
 { #category : #running }
-AILogisticRegression >> djdzForH: yPredicted y: outputVector [
+AILogisticRegression >> costDerivative: predictedOutputVector target: targetOutputVector [
 
 	"h(z) = sigmoid function (see method comment)"
 	"z = Xw + bias (see method comment)"
@@ -43,15 +60,18 @@ AILogisticRegression >> djdzForH: yPredicted y: outputVector [
 	"J = - ylog( h(z) ) - ( 1 - y )log( 1 - h(z) )"
 	"dJ/dz = (dJ/dh)*(dh/dz)"
 	"dJ/dz = h(z) - y"
+	
+	"We will return a vector so the methods weights and bias derivative must sum the elements
+	of the vector"
 
-	^ yPredicted - outputVector
+	^ predictedOutputVector - targetOutputVector
 ]
 
 { #category : #api }
 AILogisticRegression >> predict: inputMatrix [
 
 	| prediction |
-	prediction := inputMatrix collect: [ :row | (row * weights) sum + bias ].
+	prediction := self weightedSumOf: inputMatrix.
 
 	^ prediction collect: [ :each | 
 		each > 0.5
@@ -60,33 +80,7 @@ AILogisticRegression >> predict: inputMatrix [
 ]
 
 { #category : #running }
-AILogisticRegression >> sigmoidForZ: zVector [
-
-	"Sigmoid function: 1 / (1 + e ^ -z)"
-	
-	^ zVector collect: [ :z | 
-		1 / (1 + (Float e raisedTo: z negated)) ]
-]
-
-{ #category : #running }
-AILogisticRegression >> updateX: inputMatrix y: outputVector [
-
-	| weightDerivative biasDerivative yPredicted z djdz |
-
-	z := self zForX: inputMatrix.
-	yPredicted := self sigmoidForZ: z.
-
-	djdz := self djdzForH: yPredicted y: outputVector.
-	weightDerivative := self weightDerivativeforX: inputMatrix djdz: djdz.
-
-	biasDerivative := self biasDerivative: djdz.
-
-	weights := weights - (learningRate * weightDerivative).
-	bias := bias - (learningRate * biasDerivative)
-]
-
-{ #category : #running }
-AILogisticRegression >> weightDerivativeforX: inputMatrix djdz: djdz [
+AILogisticRegression >> weightDerivativeforX: inputMatrix costDerivative: costDerivativeVector [
 
 	"J(w) = cost function"
 	"J = - ylog( h(x) ) - ( 1 - y )log( 1 - h(x) )"
@@ -96,19 +90,7 @@ AILogisticRegression >> weightDerivativeforX: inputMatrix djdz: djdz [
 
 	| weightDerivative |
 	weightDerivative := (1 to: inputMatrix size) sum: [ :index | 
-		(inputMatrix at: index) * (djdz at: index) ].
+		(inputMatrix at: index) * (costDerivativeVector at: index) ].
+	
 	^ weightDerivative / weightDerivative size
-]
-
-{ #category : #running }
-AILogisticRegression >> zForX: inputMatrix [
-
-	"z = Xw + b"
-	"As X is a matrix we need to multiplicate each of the rows, the rows are the data, with the weights.
-	Each of the rows has n size. n being the number of features.
-	After the multiplication of a row with all the weights, we need to sum all the elements and add the bias.
-	Then we return a vector of the same size of the original X matrix."
-
-	^ inputMatrix collect: [:row |
-		(row * weights) sum + bias ]
 ]

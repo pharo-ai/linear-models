@@ -44,23 +44,74 @@ Class {
 	#category : #'AI-Regressions-Linear regression'
 }
 
-{ #category : #api }
-AILinearRegression >> predict: inputMatrix [
+{ #category : #running }
+AILinearRegression >> activationFor: inputMatrix [
+
+	"The mathematical equation is a line. Where both w and x they are vectors as the multiple linear
+	regression can be applied to multidimensional lines.
 	
-	^ inputMatrix collect: [ :row |
-		(row * weights) sum + bias ]
+	y = X*w + bias"
+
+	^ self weightedSumOf: inputMatrix
 ]
 
 { #category : #running }
-AILinearRegression >> updateX: inputMatrix y: targetVector [
+AILinearRegression >> biasDerivative: costDerivative [
 
-	| predictedVector difference |
-	
-	predictedVector := self predict: inputMatrix.
-	difference := targetVector - predictedVector.
-	
-	bias := bias + (2 * learningRate * difference sum).
 
-	weights := weights + (2 * learningRate * ((1 to: targetVector size) sum: [ :i |	
-		(difference at: i) * (inputMatrix at: i) ])).
+	"J(w) = (1/n) * Σ (yi - h(z))^2"
+
+	"dj/db = dj/dz * dz/db"
+	"dj/dz = (1/n) *  2 * Σ (yi - h(z))
+	dz/db = 1	"
+
+	"So the derivate of the cost funciton in terms of the bias is the same as the derivative
+	of the cost function in terms of the z"
+
+	^ costDerivative average
+]
+
+{ #category : #running }
+AILinearRegression >> costDerivative: predictedOutputVector target: targetOutputVector [
+
+	"We are using the mean squared error function to minimize the errors."
+
+	"h(z) = activation function
+	z = X*w + bias"
+
+	"cost function = J(w) = (1/n) * Σ (yi - h(z))^2
+	Is the same as:
+	J(w) = (1/n) * Σ (y - (xi*w + bias))^2"
+
+	"So, the derivative of the cost function in terms of z
+	dj/dz = (1/n) *  2 * Σ (yi - h(z))"
+
+	"This method receives the h(z) which is the predicted output vector as a parameter.
+	We return a vector instead of a number. That means that we should sum the elements of the vector
+	and divide by N in weight and bias derivative methods"
+
+	^ 2 * (predictedOutputVector - targetOutputVector)
+]
+
+{ #category : #api }
+AILinearRegression >> predict: inputMatrix [
+
+	^ self weightedSumOf: inputMatrix
+]
+
+{ #category : #running }
+AILinearRegression >> weightDerivativeforX: inputMatrix costDerivative: costDerivativeVector [
+
+	"J(w) = (1/n) * Σ (yi - h(z))^2"
+
+	"dj/dw = dj/dz * dz/dw
+	dz/dw = X"
+
+	"So,
+	dj/dw = X * dj/dz"
+
+	| weightsDerivative |
+	weightsDerivative := (1 to: inputMatrix size) sum: [ :i | 
+		(costDerivativeVector at: i) * (inputMatrix at: i) ].
+	^ weightsDerivative / weightsDerivative size
 ]
