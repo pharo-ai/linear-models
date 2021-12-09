@@ -10,7 +10,8 @@ Class {
 		'learningRate',
 		'normalizer',
 		'shouldNormalizeData',
-		'weights'
+		'weights',
+		'costHistory'
 	],
 	#category : #'AI-Regressions-Core'
 }
