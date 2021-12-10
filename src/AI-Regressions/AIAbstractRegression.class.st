@@ -25,7 +25,7 @@ AIAbstractRegression class >> defaultLearningRate [
 { #category : #'as yet unclassified' }
 AIAbstractRegression class >> defaultMaxIterations [
 
-	^ 1000
+	^ 5000
 ]
 
 { #category : #accessing }
