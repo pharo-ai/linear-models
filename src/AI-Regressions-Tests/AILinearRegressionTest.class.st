@@ -27,7 +27,7 @@ AILinearRegressionTest >> testExactFitSingleVariable [
 
 	model := AILinearRegression new
 		         learningRate: 0.01;
-		         maxIterations: 5000;
+		         maxIterations: 2000;
 		         yourself.
 
 	model fitX: input y: output.
@@ -35,4 +35,8 @@ AILinearRegressionTest >> testExactFitSingleVariable [
 	actualOutput
 		with: expectedOutput
 		do: [ :actual :expected | self assert: actual closeTo: expected ]
+]
+
+{ #category : #tests }
+AILinearRegressionTest >> testExactFitTwoVariables [
 ]

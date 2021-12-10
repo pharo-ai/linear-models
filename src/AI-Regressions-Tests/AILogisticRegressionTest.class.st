@@ -27,7 +27,7 @@ AILogisticRegressionTest >> setUp [
 AILogisticRegressionTest >> testExactFitSingleVariable [
 
 	| output newInput expectedOutput actualOutput inputPositive inputNegative input |
-	"From -4 to 4, positives numbers are 1"
+	"From -4 to 4, positives numbers are 1 and the negatives are 0"
 	inputNegative := #( #(-3.2) #(-3.6) #(-2.54) #(-1.64) #(-2.875) #(-1.867567) #(-0.876)
 		#(-1.231421) #(-3.4242) #(-0.223) #(-1.343) ) .
 	inputPositive := #( #(0.9898) #(1.767) #(2.87578) #(3.79867) #(1.767) #(2.0987897) #(1.79090)
@@ -56,7 +56,7 @@ AILogisticRegressionTest >> testExactFitSingleVariable [
 AILogisticRegressionTest >> testExactFitTwoVariables [
 
 	| output newInput expectedOutput actualOutput inputPositive inputNegative input numIte random |
-	"The point that have both coordinates positive are 1 and the one that have both of the point as negative numbers are 0"
+	"The points that have both positive coordinates are 1 and the ones that have both of the coordinates negative numbers are 0"
 	numIte := 50.
 	inputNegative := OrderedCollection new.
 	inputPositive := OrderedCollection new.
