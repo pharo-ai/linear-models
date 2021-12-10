@@ -40,7 +40,7 @@ AILogisticRegressionTest >> testExactFitSingleVariable [
 	expectedOutput := #( 1 1 1 0 0 0 ).
 
 	model := AILogisticRegression new
-		         learningRate: 0.01;
+		         learningRate: 0.5;
 		         maxIterations: 1000;
 		         yourself.
 
