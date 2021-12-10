@@ -113,5 +113,5 @@ AILinearRegression >> weightDerivativeforX: inputMatrix costDerivative: costDeri
 	| weightsDerivative |
 	weightsDerivative := (1 to: inputMatrix size) sum: [ :i | 
 		(costDerivativeVector at: i) * (inputMatrix at: i) ].
-	^ weightsDerivative / weightsDerivative size
+	^ weightsDerivative / inputMatrix size
 ]

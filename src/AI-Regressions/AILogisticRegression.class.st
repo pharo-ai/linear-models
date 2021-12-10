@@ -92,5 +92,5 @@ AILogisticRegression >> weightDerivativeforX: inputMatrix costDerivative: costDe
 	weightDerivative := (1 to: inputMatrix size) sum: [ :index | 
 		(inputMatrix at: index) * (costDerivativeVector at: index) ].
 	
-	^ weightDerivative / weightDerivative size
+	^ weightDerivative / inputMatrix size
 ]
