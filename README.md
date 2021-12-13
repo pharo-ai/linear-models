@@ -16,7 +16,7 @@
 
 This is a library that implements two of the most-know linear models: Linear and Logistic regression.
 
-## [How to install it?](#How-to-install0it)
+## [How to install it?](#How-to-install-it)
 
 To install `linear-models`, go to the Playground (Ctrl+OW) in your [Pharo](https://pharo.org/) image and execute the following Metacello script (select it and press Do-it button or Ctrl+D):
 
@@ -37,7 +37,7 @@ spec
   with: [ spec repository: 'github://pharo-ai/linear-regression/src' ].
 ```
 
-## [Linear regression](#linear-regression)
+## [Linear regression](#Linear-regression)
 
 Linear regression is a machine learning model that attempts to find the the linear relationship between one or more input variables _x1, x2, ..., xn_ and an output variable _y_. It finds a set of parameters _b, w1, w2, ..., wn_ such that the predicted output _h(x) = b + w1 * x1 + ... + wn * xn_ is as close as possible to the real output _y_.
 
