@@ -10,7 +10,7 @@
 - [How to depend on it](#how-to-depend-on-it)
 - [Linear regression](#linear-regression)
 - [Logistic regression](#logistic-regression)
-- [Measuring the accuracy of a model](#Measuring-a-model)
+- [Measuring the accuracy of a model](#measuring-a-model)
 
 ## [Description](#Description)
 
