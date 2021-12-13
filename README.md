@@ -1,25 +1,33 @@
-# Linear Regression
+# Linear Models
 
 [![Build status](https://github.com/pharo-ai/linear-regression/workflows/CI/badge.svg)](https://github.com/pharo-ai/linear-regression/actions/workflows/test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/pharo-ai/linear-regression/badge.svg?branch=master)](https://coveralls.io/github/pharo-ai/linear-regression?branch=master)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/pharo-ai/linear-regression/master/LICENSE)
 
-Linear regression is a machine learning model that attempts to find the the linear relationship between one or more input variables _x1, x2, ..., xn_ and an output variable _y_. It finds a set of parameters _b, w1, w2, ..., wn_ such that the predicted output _h(x) = b + w1 * x1 + ... + wn * xn_ is as close as possible to the real output _y_.
+### Table of Contents  
+[Description](#description)  
+[How to install it](#how-to-install-it)  
+[How to depend on it](#how-to-depend-on-it)  
+[Implemented graph algorithms](#implemented-graph-algorithms)  
+[How to use the graph algorithms](#how-to-use-the-graph-algorithms)  
+[Graph generation algorithms](#graph-generation-algorithms)  
 
-## How to install it?
+## [Description](#Description)
+
+## [How to install it?](#How-to-install0it)
 
 To install `linear-regression`, go to the Playground (Ctrl+OW) in your [Pharo](https://pharo.org/) image and execute the following Metacello script (select it and press Do-it button or Ctrl+D):
 
 ```Smalltalk
 Metacello new
   baseline: 'AILinearRegression';
-  repository: 'github://pharo-ai/linear-regression/src';
+  repository: 'github://pharo-ai/linear-models/src';
   load.
 ```
 
-## How to depend on it?
+## [How to depend on it?](#How-to-depend-on-it)
 
-If you want to add a dependency on `linear-regression` to your project, include the following lines into your baseline method:
+If you want to add a dependency on `linear-models` to your project, include the following lines into your baseline method:
 
 ```Smalltalk
 spec
