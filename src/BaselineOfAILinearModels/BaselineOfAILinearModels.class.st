@@ -1,11 +1,11 @@
 Class {
-	#name : #BaselineOfAILinearRegression,
+	#name : #BaselineOfAILinearModels,
 	#superclass : #BaselineOf,
-	#category : #BaselineOfAILinearRegression
+	#category : #BaselineOfAILinearModels
 }
 
 { #category : #baselines }
-BaselineOfAILinearRegression >> baseline: spec [
+BaselineOfAILinearModels >> baseline: spec [
 	<baseline>
 	spec for: #common do: [
 		"External dependencies"
