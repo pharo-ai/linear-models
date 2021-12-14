@@ -1,14 +1,14 @@
 SmalltalkCISpec {
   #loading : [
     SCIMetacelloLoadSpec {
-      #baseline : 'AILinearRegression',
+      #baseline : 'AILinearModels',
       #directory : 'src',
       #platforms : [ #pharo ]
     }
   ],
   #testing : {
     #coverage : {
-      #packages : [ 'AI-LinearRegression' ]
+      #packages : [ 'AI-Regressions' ]
     }
   }
 }

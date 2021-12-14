@@ -5,22 +5,24 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/pharo-ai/linear-regression/master/LICENSE)
 
 ### Table of Contents  
-[Description](#description)  
-[How to install it](#how-to-install-it)  
-[How to depend on it](#how-to-depend-on-it)  
-[Implemented graph algorithms](#implemented-graph-algorithms)  
-[How to use the graph algorithms](#how-to-use-the-graph-algorithms)  
-[Graph generation algorithms](#graph-generation-algorithms)  
+- [Description](#description)  
+- [How to install it](#how-to-install-it)  
+- [How to depend on it](#how-to-depend-on-it)
+- [Linear regression](#linear-regression)
+- [Logistic regression](#logistic-regression)
+- [Measuring the accuracy of a model](#measuring)
 
 ## [Description](#Description)
 
-## [How to install it?](#How-to-install0it)
+This is a library that implements two of the most-know linear models: Linear and Logistic regression.
 
-To install `linear-regression`, go to the Playground (Ctrl+OW) in your [Pharo](https://pharo.org/) image and execute the following Metacello script (select it and press Do-it button or Ctrl+D):
+## [How to install it?](#How-to-install-it)
+
+To install `linear-models`, go to the Playground (Ctrl+OW) in your [Pharo](https://pharo.org/) image and execute the following Metacello script (select it and press Do-it button or Ctrl+D):
 
 ```Smalltalk
 Metacello new
-  baseline: 'AILinearRegression';
+  baseline: 'AILinearModels';
   repository: 'github://pharo-ai/linear-models/src';
   load.
 ```
@@ -35,9 +37,9 @@ spec
   with: [ spec repository: 'github://pharo-ai/linear-regression/src' ].
 ```
 
-If you are new to baselines and Metacello, check out the [Baselines](https://github.com/pharo-open-documentation/pharo-wiki/blob/master/General/Baselines.md) tutorial on Pharo Wiki.
+## [Linear regression](#Linear-regression)
 
-## How to use it?
+Linear regression is a machine learning model that attempts to find the the linear relationship between one or more input variables _x1, x2, ..., xn_ and an output variable _y_. It finds a set of parameters _b, w1, w2, ..., wn_ such that the predicted output _h(x) = b + w1 * x1 + ... + wn * xn_ is as close as possible to the real output _y_.
 
 Given 20 input vectors _x = (x1, x2, x3)_ and 20 output values _y_.
 
@@ -70,7 +72,7 @@ output := #(-10.6 10.5 -13.6 27.7 -24.1 12.3 -2.6 -0.2 12.2 -22.1 -10.5 -24.3 2.
 We want to find the linear relationship between the input and the output. In other words, we need to find such parameters _b, w1, w2, w3_ that the line _h(x) = b + w1 * x1 + w2 * x2 + w3 * x3_ fits the data as closely as possible. To do that, we initialize a linear regression model and fit it to the data.
 
 ```Smalltalk
-model := AILinearRegression new
+linearRegressionModel := AILinearRegression new
   learningRate: 0.001;
   maxIterations: 2000;
   yourself.
@@ -81,8 +83,8 @@ model fitX: input y: output.
 Now we can look at the trained parameters. The real relationship between x and y is _y = 2*x1 + 10*x2 - x3_, so the parameters should be close to _b=0_, _w1=2_, _w2=10_, _w3=-1_.
 
 ```Smalltalk
-b := model bias. "-0.0029744215186773065"
-w := model weights. "#(1.9999658061022905 9.972821149946537 -0.9998757756318858)"
+b := linearRegressionModel bias. "-0.0029744215186773065"
+w := linearRegressionModel weights. "#(1.9999658061022905 9.972821149946537 -0.9998757756318858)"
 ```
 
 Finally, we can use the model to predict the output for previously unseen input.
@@ -99,5 +101,9 @@ expectedOutput := #(-2.7 -0.01 -2.4 -25.1 0.3).
 ```
 
 ```Smalltalk
-model predict: testInput. "#(-2.7144345209804244 -0.10075173689646852 -2.405518008448657 -25.090722165135997 0.28647833494634645)"
+linearRegressionModel predict: testInput. "#(-2.7144345209804244 -0.10075173689646852 -2.405518008448657 -25.090722165135997 0.28647833494634645)"
 ```
+
+## [Logistic regression](#Logistic-regression)
+
+## [Measuring the accuracy of a model](#Measuring)
