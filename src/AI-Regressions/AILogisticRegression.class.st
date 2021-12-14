@@ -33,8 +33,7 @@ AILogisticRegression >> activationFor: inputMatrix [
 	| weightedSumVector |
 	weightedSumVector := self weightedSumOf: inputMatrix.
 
-	^ weightedSumVector collect: [ :z | 
-		1 / (1 + (Float e raisedTo: z negated)) ]
+	^ weightedSumVector collect: [ :z | self sigmoidFunction: z ]
 ]
 
 { #category : #running }
@@ -67,16 +66,36 @@ AILogisticRegression >> costDerivative: predictedOutputVector target: targetOutp
 	^ predictedOutputVector - targetOutputVector
 ]
 
+{ #category : #running }
+AILogisticRegression >> normalizedPredictions: inputMatrix [
+
+	^ (self weightedSumOf: inputMatrix) collect: [ :each |  self sigmoidFunction: each ]
+]
+
 { #category : #api }
 AILogisticRegression >> predict: inputMatrix [
 
-	| prediction |
-	prediction := self weightedSumOf: inputMatrix.
+	| normalizedPredictions |
+	normalizedPredictions := self normalizedPredictions: inputMatrix.
 
-	^ prediction collect: [ :each | 
-		each > 0.5
-			ifTrue: [ 1 ]
-			ifFalse: [ 0 ] ]
+	^ normalizedPredictions collect: [ :each | 
+		  each > 0.5
+			  ifTrue: [ 1 ]
+			  ifFalse: [ 0 ] ]
+]
+
+{ #category : #api }
+AILogisticRegression >> predictProbabilities: inputMatrix [
+
+	^ self normalizedPredictions: inputMatrix 
+]
+
+{ #category : #running }
+AILogisticRegression >> sigmoidFunction: aNumber [
+
+	"Sigmoid function: 1 / (1 + e ^ -z)"
+
+	^ 1 / (1 + (Float e raisedTo: aNumber negated))
 ]
 
 { #category : #running }
