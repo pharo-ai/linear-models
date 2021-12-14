@@ -11,7 +11,8 @@ Class {
 		'normalizer',
 		'shouldNormalizeData',
 		'weights',
-		'costHistory'
+		'costHistory',
+		'performedIterations'
 	],
 	#category : #'AI-Regressions-Core'
 }
@@ -62,30 +63,29 @@ AIAbstractRegression >> costHistory [
 ]
 
 { #category : #running }
-AIAbstractRegression >> costX: inputMatrix y: targetVector [
+AIAbstractRegression >> costX: inputMatrix y: actualValues [
 
-	| outputVector |
-	outputVector := self predict: inputMatrix.
-	
-	^ (targetVector - outputVector) sum: [ :each | each ** 2 ].
+	| predictedValues |
+	predictedValues := self weightedSumOf: inputMatrix.
+
+	^ actualValues - predictedValues sum: [ :each | each ** 2 ]
 ]
 
 { #category : #api }
 AIAbstractRegression >> fitX: inputMatrix y: targetVector [
 
-	| iteration |
 	
 	self initializeWeightsOfSize: (inputMatrix anyOne size).
 	
 	costHistory := OrderedCollection new.
 	costHistory add: (self costX: inputMatrix y: targetVector).
 	
-	iteration := 1.
+	performedIterations := 0.
 	
-	[ self hasConverged or: [ iteration >= maxIterations ] ] whileFalse: [ 
+	[ self hasConverged or: [ performedIterations >= maxIterations ] ] whileFalse: [ 
 		self updateX: inputMatrix y: targetVector.
 		costHistory add: (self costX: inputMatrix y: targetVector).
-		iteration := iteration + 1 ].
+		performedIterations := performedIterations + 1 ].
 
 ]
 
@@ -165,6 +165,12 @@ AIAbstractRegression >> maxIterations: anObject [
 AIAbstractRegression >> normalizer: aNormalizer [
 
 	normalizer := aNormalizer.
+]
+
+{ #category : #accessing }
+AIAbstractRegression >> performedIterations [
+
+	^ performedIterations
 ]
 
 { #category : #api }

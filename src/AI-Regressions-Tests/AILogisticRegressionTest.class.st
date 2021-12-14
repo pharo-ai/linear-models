@@ -40,8 +40,8 @@ AILogisticRegressionTest >> testExactFitSingleVariable [
 	expectedOutput := #( 1 1 1 0 0 0 ).
 
 	model := AILogisticRegression new
-		         learningRate: 0.5;
-		         maxIterations: 3000;
+		         learningRate: 0.1;
+		         maxIterations: 1000;
 		         yourself.
 
 	model fitX: input y: output.
@@ -108,8 +108,8 @@ AILogisticRegressionTest >> testPredictProbabilities [
 	expectedOutput := #( 1 1 1 0 0 0 ).
 
 	model := AILogisticRegression new
-		         learningRate: 0.5;
-		         maxIterations: 3000;
+		         learningRate: 0.01;
+		         maxIterations: 1000;
 		         yourself.
 
 	model fitX: input y: output.
