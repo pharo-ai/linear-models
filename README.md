@@ -10,7 +10,7 @@
 - [How to depend on it](#how-to-depend-on-it)
 - [Linear regression](#linear-regression)
 - [Logistic regression](#logistic-regression)
-- [Measuring the accuracy of a model](#measuring)
+- [Measuring the accuracy of a model](#measuring-accuracy)
 
 ## [Description](#Description)
 
@@ -149,7 +149,7 @@ logisticRegressionModel predictProbabilities: testInput
 
 In our example, we have a `0.05335185163762839` probability that the output for `-3`  is `1`. Also we have a `0.9999331093095885` probability that the output for `10` is `1`.
 
-## [Measuring the accuracy of a model](#Measuring)
+## [Measuring the accuracy of a model](#Measuring-accuracy)
 
 To measure the accuracy of the model we have a library [metrics](https://github.com/pharo-ai/metrics) in pharo-ai. You will find there the Metacello scrip to install that library. After installing it, we can test the accurancy of the logistic of linear regression models.
 
@@ -165,7 +165,7 @@ And we know that we the real values are:
 realValues := #(1 3.5 4 7 3.5 1)
 ```
 
-So, we can test the accurancy of the model using the metrics that we just installed.
+So, we can test the accuracy of the model using the metrics that we just installed.
 For the previous values, we can compute the r2 score (the coefficient of determination).
 
 ```st
