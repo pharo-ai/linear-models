@@ -61,7 +61,7 @@ AILinearRegression >> biasDerivative: costDerivative [
 ]
 
 { #category : #running }
-AILinearRegression >> costDerivative: predictedOutputVector target: targetOutputVector [
+AILinearRegression >> costDerivative: predictedOutputVector actual: targetOutputVector [
 
 	"We are using the mean squared error function to minimize the errors."
 

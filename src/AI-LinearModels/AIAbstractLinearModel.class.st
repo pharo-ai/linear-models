@@ -51,7 +51,8 @@ AIAbstractLinearModel >> biasDerivative: arg1 [
 ]
 
 { #category : #running }
-AIAbstractLinearModel >> costDerivative: arg1 target: arg2 [ 
+AIAbstractLinearModel >> costDerivative: inputMatrix actual: actualValues [
+
 	^ self subclassResponsibility
 ]
 
@@ -79,7 +80,7 @@ AIAbstractLinearModel >> fitX: inputMatrix y: actualValues [
 	performedIterations := 0.
 	
 	[ self hasConverged or: [ performedIterations >= maxIterations ] ] whileFalse: [ 
-		self updateX: inputMatrix y: actualValues.
+		self updateWeightsForX: inputMatrix y: actualValues.
 		costHistory add: (self costFunctionX: inputMatrix y: actualValues).
 		performedIterations := performedIterations + 1 ].
 
@@ -88,15 +89,18 @@ AIAbstractLinearModel >> fitX: inputMatrix y: actualValues [
 { #category : #testing }
 AIAbstractLinearModel >> hasConverged [
 
-	| precision |
-	
+	| precision difference |
 	costHistory ifNil: [ ^ false ].
 	costHistory size < 2 ifTrue: [ ^ false ].
-	
+
 	precision := 1e-10.
-	
-	^ (costHistory last closeTo: 0 precision: precision) or: [
-		costHistory nextToLast closeTo: costHistory last precision: precision ]
+	difference := costHistory last - costHistory nextToLast.
+
+	"If the error, calculated by the cost function, is increasing that means the model is starting to diverge"
+	difference > 0 ifTrue: [ ModelStartingToDivergeException signal ].
+
+	^ (costHistory last closeTo: 0 precision: precision) or: [ 
+		  difference closeTo: 0 precision: precision ]
 ]
 
 { #category : #running }
@@ -187,13 +191,13 @@ AIAbstractLinearModel >> shouldNormalizeData: aBoolean [
 ]
 
 { #category : #running }
-AIAbstractLinearModel >> updateX: inputMatrix y: actualValues [
+AIAbstractLinearModel >> updateWeightsForX: inputMatrix y: actualValues [
 
 	| weightDerivative biasDerivative predictedOutputVector costDerivative |
 
 	predictedOutputVector := self hypothesisFunction: inputMatrix.
 
-	costDerivative := self costDerivative: predictedOutputVector target: actualValues.
+	costDerivative := self costDerivative: predictedOutputVector actual: actualValues.
 	weightDerivative := self weightDerivativeforX: inputMatrix costDerivative: costDerivative.
 
 	biasDerivative := self biasDerivative: costDerivative.

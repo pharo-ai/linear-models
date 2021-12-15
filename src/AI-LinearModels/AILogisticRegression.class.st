@@ -34,13 +34,13 @@ AILogisticRegression >> biasDerivative: costDerivativeVector [
 ]
 
 { #category : #running }
-AILogisticRegression >> costDerivative: predictedOutputVector target: targetOutputVector [
+AILogisticRegression >> costDerivative: predictedOutputVector actual: targetOutputVector [
 
 	"h(z) = sigmoid function (see method comment)"
 	"z = Xw + bias (see method comment)"
 
 	"J(w) = cost function"
-	"J = - ylog( h(z) ) - ( 1 - y )log( 1 - h(z) )"
+	"J(x) = - ylog( h(x) ) - ( 1 - y )log( 1 - h(x) )"
 	"dJ/dz = (dJ/dh)*(dh/dz)"
 	"dJ/dz = h(z) - y"
 	
@@ -61,9 +61,11 @@ AILogisticRegression >> costFunctionX: inputMatrix y: actualValues [
 
 	| predictedValues sum |
 	predictedValues := self hypothesisFunction: inputMatrix.
-	
-	sum := actualValues with: predictedValues collect: [ :actual :predicted | 
-		(actual * predicted ln) negated - ((1 - actual) * (1 - predicted) ln) ].
+
+	sum := actualValues
+		with: predictedValues
+		collect: [ :actual :predicted |
+			(actual * predicted ln) negated - ((1 - actual) * (1 - predicted) ln) ].
 	^ sum average
 ]
 
