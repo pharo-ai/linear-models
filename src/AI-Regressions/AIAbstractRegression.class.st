@@ -35,11 +35,6 @@ AIAbstractRegression class >> defaultNormalizerClass [
 	^ AIMinMaxNormalizer
 ]
 
-{ #category : #running }
-AIAbstractRegression >> activationFor: arg1 [ 
-	^ self subclassResponsibility
-]
-
 { #category : #accessing }
 AIAbstractRegression >> bias [
 
@@ -56,35 +51,32 @@ AIAbstractRegression >> costDerivative: arg1 target: arg2 [
 	^ self subclassResponsibility
 ]
 
+{ #category : #running }
+AIAbstractRegression >> costFunctionX: inputMatrix y: actualValues [
+
+	^ self subclassResponsibility
+]
+
 { #category : #accessing }
 AIAbstractRegression >> costHistory [
 
 	^ costHistory
 ]
 
-{ #category : #running }
-AIAbstractRegression >> costX: inputMatrix y: actualValues [
-
-	| predictedValues |
-	predictedValues := self weightedSumOf: inputMatrix.
-
-	^ actualValues - predictedValues sum: [ :each | each ** 2 ]
-]
-
 { #category : #api }
-AIAbstractRegression >> fitX: inputMatrix y: targetVector [
+AIAbstractRegression >> fitX: inputMatrix y: actualValues [
 
 	
 	self initializeWeightsOfSize: (inputMatrix anyOne size).
 	
 	costHistory := OrderedCollection new.
-	costHistory add: (self costX: inputMatrix y: targetVector).
+	costHistory add: (self costFunctionX: inputMatrix y: actualValues).
 	
 	performedIterations := 0.
 	
 	[ self hasConverged or: [ performedIterations >= maxIterations ] ] whileFalse: [ 
-		self updateX: inputMatrix y: targetVector.
-		costHistory add: (self costX: inputMatrix y: targetVector).
+		self updateX: inputMatrix y: actualValues.
+		costHistory add: (self costFunctionX: inputMatrix y: actualValues).
 		performedIterations := performedIterations + 1 ].
 
 ]
@@ -101,6 +93,11 @@ AIAbstractRegression >> hasConverged [
 	
 	^ (costHistory last closeTo: 0 precision: precision) or: [
 		costHistory nextToLast closeTo: costHistory last precision: precision ]
+]
+
+{ #category : #running }
+AIAbstractRegression >> hypothesisFunction: inputMatrix [ 
+	^ self subclassResponsibility
 ]
 
 { #category : #initialization }
@@ -186,13 +183,13 @@ AIAbstractRegression >> shouldNormalizeData: aBoolean [
 ]
 
 { #category : #running }
-AIAbstractRegression >> updateX: inputMatrix y: targetOutputVector [
+AIAbstractRegression >> updateX: inputMatrix y: actualValues [
 
 	| weightDerivative biasDerivative predictedOutputVector costDerivative |
 
-	predictedOutputVector := self activationFor: inputMatrix.
+	predictedOutputVector := self hypothesisFunction: inputMatrix.
 
-	costDerivative := self costDerivative: predictedOutputVector target: targetOutputVector.
+	costDerivative := self costDerivative: predictedOutputVector target: actualValues.
 	weightDerivative := self weightDerivativeforX: inputMatrix costDerivative: costDerivative.
 
 	biasDerivative := self biasDerivative: costDerivative.

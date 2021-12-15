@@ -21,22 +21,6 @@ Class {
 }
 
 { #category : #running }
-AILogisticRegression >> activationFor: inputMatrix [
-
-	"Activation function for logistic regression is the logistic function
-	which is a kind of sigmoid function"
-
-	"Sigmoid function: 1 / (1 + e ^ -z)
-	z = X*w + bias 
-	where X is the input matrix"
-
-	| weightedSumVector |
-	weightedSumVector := self weightedSumOf: inputMatrix.
-
-	^ weightedSumVector collect: [ :z | self sigmoidFunction: z ]
-]
-
-{ #category : #running }
 AILogisticRegression >> biasDerivative: costDerivativeVector [
 
 	"J(w) = cost function"
@@ -67,18 +51,47 @@ AILogisticRegression >> costDerivative: predictedOutputVector target: targetOutp
 ]
 
 { #category : #running }
-AILogisticRegression >> normalizedPredictions: inputMatrix [
+AILogisticRegression >> costFunctionX: inputMatrix y: actualValues [
 
-	^ (self weightedSumOf: inputMatrix) collect: [ :each |  self sigmoidFunction: each ]
+	"The cost function for the logistic regression is defined as:
+	J(x) = - ylog( h(x) ) - ( 1 - y )log( 1 - h(x) )"
+
+	"Which can be rewritten as:
+	 J(x) = (1/n) * ∑ [- ylog( h(x) ) - ( 1 - y )log( 1 - h(x) )]"
+
+	| predictedValues sum |
+	predictedValues := self hypothesisFunction: inputMatrix.
+	
+	sum := actualValues with: predictedValues collect: [ :actual :predicted | 
+		(actual * predicted ln) negated - ((1 - actual) * (1 - predicted) ln) ].
+	^ sum average
+]
+
+{ #category : #running }
+AILogisticRegression >> hypothesisFunction: inputMatrix [
+
+	"The hypothesis function for logistic regression is the logistic function
+	which is a kind of sigmoid function"
+
+	"h(x)= 1 / (1 + e ^ -z)
+	and z is a number that is obtained with the line equation
+	z = X*w + bias 
+	where X is the input matrix and w the weights"
+
+	| weightedSumVector sigmoidFunction |
+	sigmoidFunction := [ :z | 1 / (1 + (Float e raisedTo: z negated)) ].
+	
+	weightedSumVector := self weightedSumOf: inputMatrix.
+	^ weightedSumVector collect: [ :z | sigmoidFunction value: z ]
 ]
 
 { #category : #api }
 AILogisticRegression >> predict: inputMatrix [
 
-	| normalizedPredictions |
-	normalizedPredictions := self normalizedPredictions: inputMatrix.
+	| predictions |
+	predictions := self hypothesisFunction: inputMatrix.
 
-	^ normalizedPredictions collect: [ :each | 
+	^ predictions collect: [ :each | 
 		  each > 0.5
 			  ifTrue: [ 1 ]
 			  ifFalse: [ 0 ] ]
@@ -87,7 +100,7 @@ AILogisticRegression >> predict: inputMatrix [
 { #category : #api }
 AILogisticRegression >> predictProbabilities: inputMatrix [
 
-	^ self normalizedPredictions: inputMatrix 
+	^ self hypothesisFunction: inputMatrix 
 ]
 
 { #category : #running }
@@ -102,14 +115,19 @@ AILogisticRegression >> sigmoidFunction: aNumber [
 AILogisticRegression >> weightDerivativeforX: inputMatrix costDerivative: costDerivativeVector [
 
 	"J(w) = cost function"
+
 	"J = - ylog( h(x) ) - ( 1 - y )log( 1 - h(x) )"
+
 	"dJ/dw = (dJ/dh)*(dh/dz)*(dz/dw)"
+
 	"dJ/dw = X*(dJ/dz)"
+
 	"dJ/dw = X( h(z) - y )"
 
 	| weightDerivative |
-	weightDerivative := (1 to: inputMatrix size) sum: [ :index | 
-		(inputMatrix at: index) * (costDerivativeVector at: index) ].
+	weightDerivative := inputMatrix
+		with: costDerivativeVector
+		collect: [ :x :cost | x * cost ].
 
-	^ weightDerivative / inputMatrix size
+	^ weightDerivative average
 ]

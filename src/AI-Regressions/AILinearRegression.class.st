@@ -45,17 +45,6 @@ Class {
 }
 
 { #category : #running }
-AILinearRegression >> activationFor: inputMatrix [
-
-	"The mathematical equation is a line. Where both w and x they are vectors as the multiple linear
-	regression can be applied to multidimensional lines.
-	
-	y = X*w + bias"
-
-	^ self weightedSumOf: inputMatrix
-]
-
-{ #category : #running }
 AILinearRegression >> biasDerivative: costDerivative [
 
 
@@ -93,10 +82,34 @@ AILinearRegression >> costDerivative: predictedOutputVector target: targetOutput
 	^ 2 * (predictedOutputVector - targetOutputVector)
 ]
 
+{ #category : #running }
+AILinearRegression >> costFunctionX: inputMatrix y: actualValues [
+
+	"The cost function for the linear regression is the mean squared error function"
+
+	"J(w) = (1/n) * Σ (yi - h(z))^2"
+
+	| predictedValues squaredSum |
+	predictedValues := self hypothesisFunction: inputMatrix.
+
+	squaredSum := (actualValues - predictedValues) collect: [ :each | each ** 2 ].
+	^ squaredSum average
+]
+
+{ #category : #running }
+AILinearRegression >> hypothesisFunction: inputMatrix [
+
+	"The hypothesis function for the linear regression is the line equation. It can be a multidimensional line."
+
+	"h(x) = X*w + bias"
+
+	^ self weightedSumOf: inputMatrix
+]
+
 { #category : #api }
 AILinearRegression >> predict: inputMatrix [
 
-	^ self weightedSumOf: inputMatrix
+	^ self hypothesisFunction: inputMatrix
 ]
 
 { #category : #running }
@@ -106,12 +119,13 @@ AILinearRegression >> weightDerivativeforX: inputMatrix costDerivative: costDeri
 
 	"dj/dw = dj/dz * dz/dw
 	dz/dw = X"
-
 	"So,
 	dj/dw = X * dj/dz"
 
 	| weightsDerivative |
-	weightsDerivative := (1 to: inputMatrix size) sum: [ :i | 
-		(costDerivativeVector at: i) * (inputMatrix at: i) ].
-	^ weightsDerivative / inputMatrix size
+	weightsDerivative := inputMatrix
+		with: costDerivativeVector
+		collect: [ :x : cost | x * cost ].
+	
+	^ weightsDerivative average
 ]
