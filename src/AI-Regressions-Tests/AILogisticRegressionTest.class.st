@@ -40,9 +40,9 @@ AILogisticRegressionTest >> testExactFitSingleVariable [
 	expectedOutput := #( 1 1 1 0 0 0 ).
 
 	model := AILogisticRegression new
-		         learningRate: 0.1;
-		         maxIterations: 1000;
-		         yourself.
+		learningRate: 0.01;
+		maxIterations: 2000;
+		yourself.
 
 	model fitX: input y: output.
 	actualOutput := model predict: newInput.
@@ -57,15 +57,15 @@ AILogisticRegressionTest >> testExactFitTwoVariables [
 
 	| output newInput expectedOutput actualOutput inputPositive inputNegative input numIte random |
 	"The points that have both positive coordinates are 1 and the ones that have both of the coordinates negative numbers are 0"
-	numIte := 50.
+	numIte := 100.
 	inputNegative := OrderedCollection new.
 	inputPositive := OrderedCollection new.
 	random := Random seed: 453.
 	
 	numIte timesRepeat: [ 
 		| x y |
-		y:= self generateRandomNumber: random between: 0 and: 20. 
-		x:= self generateRandomNumber: random between: 0 and: 20. 
+		y:= self generateRandomNumber: random between: 0 and: 10. 
+		x:= self generateRandomNumber: random between: 0 and: 10. 
 		inputPositive add: {x . y}.
 		
 		y:= self generateRandomNumber: random between: 0 and: 20. 
@@ -79,9 +79,9 @@ AILogisticRegressionTest >> testExactFitTwoVariables [
 	expectedOutput := #( 1 1 1 0 0 0 ).
 
 	model := AILogisticRegression new
-		         learningRate: 0.01;
-		         maxIterations: 1000;
-		         yourself.
+		learningRate: 0.01;
+		maxIterations: 2000;
+		yourself.
 
 	model fitX: input y: output.
 	actualOutput := model predict: newInput.
@@ -114,9 +114,13 @@ AILogisticRegressionTest >> testPredictProbabilities [
 
 	model fitX: input y: output.
 	actualOutput := model predictProbabilities: newInput.
-	actualOutputPositive := actualOutput copyFrom: 1 to:3.
+	actualOutputPositive := actualOutput copyFrom: 1 to: 3.
 	actualOutputNegative := actualOutput copyFrom: 4 to: 6.
 
-	actualOutputPositive do: [ :each | self assert: each > 0.5 ].
-	actualOutputNegative do: [ :each | self assert: each < 0.5 ].
+	actualOutputPositive do: [ :each |
+		self assert: each > 0.5.
+		self assert: each < 1 ].
+	actualOutputNegative do: [ :each |
+		self assert: each < 0.5.
+		self assert: each > 0 ].
 ]
