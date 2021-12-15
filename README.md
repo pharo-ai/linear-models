@@ -118,7 +118,7 @@ logisticRegressionModel := AILogisticRegression new
 logisticRegressionModel fitX: input y: output.
 ```
 
-We can look at the trained parameters. As the funciton returns `1` for all positive numbers and 0, and returns `0` for negative numbers, the bias should be close to 0 and the weight close to 1.
+We can look at the trained parameters.
 
 ```Smalltalk
 b := logisticRegressionModel bias.
