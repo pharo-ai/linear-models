@@ -106,14 +106,6 @@ AILogisticRegression >> predictProbabilities: inputMatrix [
 ]
 
 { #category : #running }
-AILogisticRegression >> sigmoidFunction: aNumber [
-
-	"Sigmoid function: 1 / (1 + e ^ -z)"
-
-	^ 1 / (1 + (Float e raisedTo: aNumber negated))
-]
-
-{ #category : #running }
 AILogisticRegression >> weightDerivativeforX: inputMatrix costDerivative: costDerivativeVector [
 
 	"J(w) = cost function"

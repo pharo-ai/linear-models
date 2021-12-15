@@ -36,7 +36,3 @@ AILinearRegressionTest >> testExactFitSingleVariable [
 		with: expectedOutput
 		do: [ :actual :expected | self assert: actual closeTo: expected ].
 ]
-
-{ #category : #tests }
-AILinearRegressionTest >> testExactFitTwoVariables [
-]
