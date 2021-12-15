@@ -1,5 +1,5 @@
 "
-I am a custom exception that is trigerred when the model is starting to diverge (the weights start to grow up to infinity)
+I am a custom exception that is signaled when the model is starting to diverge (the weights start to grow up to infinity)
 "
 Class {
 	#name : #ModelStartingToDivergeException,
