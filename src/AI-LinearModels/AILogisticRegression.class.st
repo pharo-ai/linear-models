@@ -109,13 +109,10 @@ AILogisticRegression >> predictProbabilities: inputMatrix [
 AILogisticRegression >> weightDerivativeforX: inputMatrix costDerivative: costDerivativeVector [
 
 	"J(w) = cost function"
-
 	"J = - ylog( h(x) ) - ( 1 - y )log( 1 - h(x) )"
 
 	"dJ/dw = (dJ/dh)*(dh/dz)*(dz/dw)"
-
 	"dJ/dw = X*(dJ/dz)"
-
 	"dJ/dw = X( h(z) - y )"
 
 	| weightDerivative |
