@@ -156,7 +156,7 @@ To measure the accuracy of the model we have a library [metrics](https://github.
 For example, let's image that our logistic regression model has produced the following output.
 
 ```st
-prediction := logisticRegressionModel predict: someValuse
+prediction := logisticRegressionModel predict: someValues
 "#( 1 3 5 7 4 2)"
 ```
 
