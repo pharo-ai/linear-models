@@ -1,8 +1,12 @@
 "
-I am the abstract class for linear and logistic regression (for now) and I have the general methods for the regression
+I am the abstract class for linear models. I represent a model that is described with a line equation
+
+y = W*X + b
+
+where both W and X are vectors that can have any size (multidimensional lines).
 "
 Class {
-	#name : #AIAbstractRegression,
+	#name : #AIAbstractLinearModel,
 	#superclass : #Object,
 	#instVars : [
 		'bias',
@@ -14,57 +18,57 @@ Class {
 		'costHistory',
 		'performedIterations'
 	],
-	#category : #'AI-Regressions-Core'
+	#category : #'AI-LinearModels-Core'
 }
 
 { #category : #'as yet unclassified' }
-AIAbstractRegression class >> defaultLearningRate [
+AIAbstractLinearModel class >> defaultLearningRate [
 
 	^ 0.01
 ]
 
 { #category : #'as yet unclassified' }
-AIAbstractRegression class >> defaultMaxIterations [
+AIAbstractLinearModel class >> defaultMaxIterations [
 
 	^ 5000
 ]
 
 { #category : #accessing }
-AIAbstractRegression class >> defaultNormalizerClass [
+AIAbstractLinearModel class >> defaultNormalizerClass [
 
 	^ AIMinMaxNormalizer
 ]
 
 { #category : #accessing }
-AIAbstractRegression >> bias [
+AIAbstractLinearModel >> bias [
 
 	^ bias
 ]
 
 { #category : #running }
-AIAbstractRegression >> biasDerivative: arg1 [ 
+AIAbstractLinearModel >> biasDerivative: arg1 [ 
 	^ self subclassResponsibility
 ]
 
 { #category : #running }
-AIAbstractRegression >> costDerivative: arg1 target: arg2 [ 
+AIAbstractLinearModel >> costDerivative: arg1 target: arg2 [ 
 	^ self subclassResponsibility
 ]
 
 { #category : #running }
-AIAbstractRegression >> costFunctionX: inputMatrix y: actualValues [
+AIAbstractLinearModel >> costFunctionX: inputMatrix y: actualValues [
 
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-AIAbstractRegression >> costHistory [
+AIAbstractLinearModel >> costHistory [
 
 	^ costHistory
 ]
 
 { #category : #api }
-AIAbstractRegression >> fitX: inputMatrix y: actualValues [
+AIAbstractLinearModel >> fitX: inputMatrix y: actualValues [
 
 	
 	self initializeWeightsOfSize: (inputMatrix anyOne size).
@@ -82,7 +86,7 @@ AIAbstractRegression >> fitX: inputMatrix y: actualValues [
 ]
 
 { #category : #testing }
-AIAbstractRegression >> hasConverged [
+AIAbstractLinearModel >> hasConverged [
 
 	| precision |
 	
@@ -96,12 +100,12 @@ AIAbstractRegression >> hasConverged [
 ]
 
 { #category : #running }
-AIAbstractRegression >> hypothesisFunction: inputMatrix [ 
+AIAbstractLinearModel >> hypothesisFunction: inputMatrix [ 
 	^ self subclassResponsibility
 ]
 
 { #category : #initialization }
-AIAbstractRegression >> initialize [
+AIAbstractLinearModel >> initialize [
 
 	super initialize.
 	learningRate := self class defaultLearningRate.
@@ -112,7 +116,7 @@ AIAbstractRegression >> initialize [
 ]
 
 { #category : #initialization }
-AIAbstractRegression >> initializeRandomWeightsOfSize: aNumber [
+AIAbstractLinearModel >> initializeRandomWeightsOfSize: aNumber [
 
 	| rand |
 	rand := Random new.
@@ -122,68 +126,68 @@ AIAbstractRegression >> initializeRandomWeightsOfSize: aNumber [
 ]
 
 { #category : #initialization }
-AIAbstractRegression >> initializeWeightsOfSize: aNumber [
+AIAbstractLinearModel >> initializeWeightsOfSize: aNumber [
 
 	self initializeRandomWeightsOfSize: aNumber
 ]
 
 { #category : #initialization }
-AIAbstractRegression >> initializeWeightsToZeroOfSize: aNumber [
+AIAbstractLinearModel >> initializeWeightsToZeroOfSize: aNumber [
 
 	bias := 0.
 	weights := (1 to: aNumber) collect: [ :each | 0 ]
 ]
 
 { #category : #accessing }
-AIAbstractRegression >> learningRate [
+AIAbstractLinearModel >> learningRate [
 
 	^ learningRate
 ]
 
 { #category : #accessing }
-AIAbstractRegression >> learningRate: anObject [
+AIAbstractLinearModel >> learningRate: anObject [
 
 	learningRate := anObject
 ]
 
 { #category : #accessing }
-AIAbstractRegression >> maxIterations [
+AIAbstractLinearModel >> maxIterations [
 
 	^ maxIterations
 ]
 
 { #category : #accessing }
-AIAbstractRegression >> maxIterations: anObject [
+AIAbstractLinearModel >> maxIterations: anObject [
 
 	maxIterations := anObject
 ]
 
 { #category : #accessing }
-AIAbstractRegression >> normalizer: aNormalizer [
+AIAbstractLinearModel >> normalizer: aNormalizer [
 
 	normalizer := aNormalizer.
 ]
 
 { #category : #accessing }
-AIAbstractRegression >> performedIterations [
+AIAbstractLinearModel >> performedIterations [
 
 	^ performedIterations
 ]
 
 { #category : #api }
-AIAbstractRegression >> predict: inputMatrix [
+AIAbstractLinearModel >> predict: inputMatrix [
 
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-AIAbstractRegression >> shouldNormalizeData: aBoolean [
+AIAbstractLinearModel >> shouldNormalizeData: aBoolean [
 
 	shouldNormalizeData := aBoolean
 ]
 
 { #category : #running }
-AIAbstractRegression >> updateX: inputMatrix y: actualValues [
+AIAbstractLinearModel >> updateX: inputMatrix y: actualValues [
 
 	| weightDerivative biasDerivative predictedOutputVector costDerivative |
 
@@ -199,12 +203,12 @@ AIAbstractRegression >> updateX: inputMatrix y: actualValues [
 ]
 
 { #category : #running }
-AIAbstractRegression >> weightDerivativeforX: arg1 costDerivative: arg2 [ 
+AIAbstractLinearModel >> weightDerivativeforX: arg1 costDerivative: arg2 [ 
 	^ self subclassResponsibility
 ]
 
 { #category : #running }
-AIAbstractRegression >> weightedSumOf: inputMatrix [
+AIAbstractLinearModel >> weightedSumOf: inputMatrix [
 
 	"z = Xw + b"
 	"As X is a matrix we need to multiplicate each of the rows, the rows are the data, with the weights.
@@ -217,7 +221,7 @@ AIAbstractRegression >> weightedSumOf: inputMatrix [
 ]
 
 { #category : #accessing }
-AIAbstractRegression >> weights [
+AIAbstractLinearModel >> weights [
 
 	^ weights
 ]

@@ -1,3 +1,6 @@
+"
+I am the baseline
+"
 Class {
 	#name : #BaselineOfAILinearModels,
 	#superclass : #BaselineOf,
@@ -15,6 +18,6 @@ BaselineOfAILinearModels >> baseline: spec [
 		
 		"Packages"
 		spec 
-			package: 'AI-Regressions' with: [ spec requires: #('AINormalization') ];
-			package: 'AI-Regressions-Tests' with: [ spec requires: #('AI-Regressions') ] ].
+			package: 'AI-LinearModels' with: [ spec requires: #('AINormalization') ];
+			package: 'AI-LinearModels-Tests' with: [ spec requires: #('AI-LinearModels') ] ].
 ]

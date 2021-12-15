@@ -16,8 +16,8 @@ See more information in the comments of the methods.
 "
 Class {
 	#name : #AILogisticRegression,
-	#superclass : #AIAbstractRegression,
-	#category : #'AI-Regressions-Logistic regression'
+	#superclass : #AIAbstractLinearModel,
+	#category : #'AI-LinearModels-Logistic regression'
 }
 
 { #category : #running }
