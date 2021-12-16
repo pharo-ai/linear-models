@@ -54,18 +54,26 @@ AILogisticRegression >> costDerivative: predictedOutputVector actual: targetOutp
 AILogisticRegression >> costFunctionX: inputMatrix y: actualValues [
 
 	"The cost function for the logistic regression is defined as:
-	J(x) = - ylog( h(x) ) - ( 1 - y )log( 1 - h(x) )"
+	J(x, y) =   -log(h(x))        if y = 1
+	            -log(1 - h(x))    if y = 0"
 
 	"Which can be rewritten as:
-	 J(x) = (1/n) * ∑ [- ylog( h(x) ) - ( 1 - y )log( 1 - h(x) )]"
+	J(x) = - ylog( h(x) ) - ( 1 - y )log( 1 - h(x) )"
 
-	| predictedValues sum |
+	| predictedValues costFunctionIfYIs1 costFunctionIfYIs0 sum costFunction |
 	predictedValues := self hypothesisFunction: inputMatrix.
+	costFunction := [ :actual :predicted | (actual * predicted ln) negated - ((1 - actual) * (1 - predicted) ln) ].
+	"costFunction := [ :actual :predicted |
+		(actual = 1.0)
+			ifTrue: [ costFunctionIfYIs1 value: predicted ]
+			ifFalse: [ costFunctionIfYIs0 value: predicted ] ]."
+	costFunctionIfYIs1 := [ :predicted | predicted ln negated ].
+	costFunctionIfYIs0 := [ :predicted | (1 - predicted) ln negated ].
 
 	sum := actualValues
 		with: predictedValues
 		collect: [ :actual :predicted |
-			(actual * predicted ln) negated - ((1 - actual) * (1 - predicted) ln) ].
+			costFunction value: actual value: predicted ].
 	^ sum average
 ]
 

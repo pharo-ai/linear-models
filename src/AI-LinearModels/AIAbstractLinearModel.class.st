@@ -97,7 +97,8 @@ AIAbstractLinearModel >> hasConverged [
 	difference := costHistory last - costHistory nextToLast.
 
 	"If the error, calculated by the cost function, is increasing that means the model is starting to diverge"
-	difference > 0 ifTrue: [ ModelStartingToDivergeException signal ].
+	(difference > 0 or: [difference isNaN])
+		ifTrue: [ ModelStartingToDivergeException signal ].
 
 	^ (costHistory last closeTo: 0 precision: precision) or: [ 
 		  difference closeTo: 0 precision: precision ]
