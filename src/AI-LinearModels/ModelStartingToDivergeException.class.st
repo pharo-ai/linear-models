@@ -11,6 +11,6 @@ Class {
 ModelStartingToDivergeException >> signal [
 
 	self messageText:
-		'The model is starting to diverge. Try setting up a smaller learning rate.'.
+		'The model is starting to diverge. Try setting up a smaller learning rate or normalizing your data.'.
 	^ super signal
 ]
