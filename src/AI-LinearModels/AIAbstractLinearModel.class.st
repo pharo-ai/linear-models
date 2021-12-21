@@ -12,8 +12,6 @@ Class {
 		'bias',
 		'maxIterations',
 		'learningRate',
-		'normalizer',
-		'shouldNormalizeData',
 		'weights',
 		'costHistory',
 		'performedIterations'
@@ -21,22 +19,30 @@ Class {
 	#category : #'AI-LinearModels-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AIAbstractLinearModel class >> defaultLearningRate [
 
 	^ 0.01
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AIAbstractLinearModel class >> defaultMaxIterations [
 
 	^ 5000
 ]
 
-{ #category : #accessing }
-AIAbstractLinearModel class >> defaultNormalizerClass [
+{ #category : #'instance creation' }
+AIAbstractLinearModel class >> learningRate: aNumber [
 
-	^ AIMinMaxNormalizer
+	^ self new learningRate: aNumber
+]
+
+{ #category : #'instance creation' }
+AIAbstractLinearModel class >> learningRate: aNumber maxIterations: maxIterations [
+
+	^ self new
+		learningRate: aNumber;
+		maxIterations: maxIterations
 ]
 
 { #category : #accessing }
@@ -114,10 +120,7 @@ AIAbstractLinearModel >> initialize [
 
 	super initialize.
 	learningRate := self class defaultLearningRate.
-	maxIterations := self class defaultMaxIterations.
-	
-	shouldNormalizeData := true.
-	normalizer := self class defaultNormalizerClass new.
+	maxIterations := self class defaultMaxIterations
 ]
 
 { #category : #initialization }
@@ -168,12 +171,6 @@ AIAbstractLinearModel >> maxIterations: anObject [
 ]
 
 { #category : #accessing }
-AIAbstractLinearModel >> normalizer: aNormalizer [
-
-	normalizer := aNormalizer.
-]
-
-{ #category : #accessing }
 AIAbstractLinearModel >> performedIterations [
 
 	^ performedIterations
@@ -183,12 +180,6 @@ AIAbstractLinearModel >> performedIterations [
 AIAbstractLinearModel >> predict: inputMatrix [
 
 	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-AIAbstractLinearModel >> shouldNormalizeData: aBoolean [
-
-	shouldNormalizeData := aBoolean
 ]
 
 { #category : #running }
