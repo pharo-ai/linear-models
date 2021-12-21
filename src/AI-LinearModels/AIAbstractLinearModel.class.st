@@ -99,7 +99,7 @@ AIAbstractLinearModel >> hasConverged [
 	costHistory ifNil: [ ^ false ].
 	costHistory size < 2 ifTrue: [ ^ false ].
 
-	precision := 1e-10.
+	precision := 1e-5.
 	difference := costHistory last - costHistory nextToLast.
 
 	"If the error, calculated by the cost function, is increasing that means the model is starting to diverge"
