@@ -34,5 +34,5 @@ AILinearRegressionTest >> testExactFitSingleVariable [
 	actualOutput := model predict: newInput.
 	actualOutput
 		with: expectedOutput
-		do: [ :actual :expected | self assert: actual closeTo: expected ].
+		do: [ :actual :expected | self assert: actual closeTo: expected ]
 ]
