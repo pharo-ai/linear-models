@@ -12,15 +12,9 @@ BaselineOfAILinearModels >> baseline: spec [
 	<baseline>
 	spec for: #common do: [
 		"External dependencies"
-		spec
-			baseline: 'AINormalization'
-    		with: [ spec repository: 'github://pharo-ai/normalization/src' ].
-		spec
-			baseline: 'RandomPartitioner'
-			with: [ spec repository: 'github://pharo-ai/RandomPartitioner/src' ].
 		
 		"Packages"
 		spec 
-			package: 'AI-LinearModels' with: [ spec requires: #('AINormalization' 'RandomPartitioner') ];
+			package: 'AI-LinearModels';
 			package: 'AI-LinearModels-Tests' with: [ spec requires: #('AI-LinearModels') ] ].
 ]
