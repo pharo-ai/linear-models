@@ -12,11 +12,11 @@
 - [Logistic regression](#logistic-regression)
 - [Measuring the accuracy of a model](#measuring-the-accuracy-of-a-model)
 
-## [Description](#Description)
+## Description
 
 This is a library that implements two of the most-know linear models: Linear and Logistic regression.
 
-## [How to install it](#How-to-install-it)
+## How to install it
 
 To install `linear-models`, go to the Playground (Ctrl+OW) in your [Pharo](https://pharo.org/) image and execute the following Metacello script (select it and press Do-it button or Ctrl+D):
 
@@ -27,7 +27,7 @@ Metacello new
   load.
 ```
 
-## [How to depend on it](#How-to-depend-on-it)
+## How to depend on it
 
 If you want to add a dependency on `linear-models` to your project, include the following lines into your baseline method:
 
@@ -37,7 +37,7 @@ spec
   with: [ spec repository: 'github://pharo-ai/linear-regression/src' ].
 ```
 
-## [Linear regression](#Linear-regression)
+## Linear regression
 
 Linear regression is a machine learning model that attempts to find the the linear relationship between one or more input variables _x1, x2, ..., xn_ and an output variable _y_. It finds a set of parameters _b, w1, w2, ..., wn_ such that the predicted output _h(x) = b + w1 * x1 + ... + wn * xn_ is as close as possible to the real output _y_.
 
@@ -86,7 +86,7 @@ linearRegressionModel predict: testInput.
 "#(-2.7144345209804244 -0.10075173689646852 -2.405518008448657 -25.090722165135997 0.28647833494634645)"
 ```
 
-## [Logistic regression](#Logistic-regression)
+## Logistic regression
 
 Logistic regression is a statistical model that predicts the likehood that an event can happen giving as an output the probability.
 
@@ -149,7 +149,7 @@ logisticRegressionModel predictProbabilities: testInput
 
 In our example, we have a `0.05335185163762839` probability that the output for `-3`  is `1`. Also we have a `0.9999331093095885` probability that the output for `10` is `1`.
 
-## [Measuring the accuracy of a model](#measuring-the-accuracy-of-a-model)
+## Measuring the accuracy of a model
 
 To measure the accuracy of the model we have a library [metrics](https://github.com/pharo-ai/metrics) in pharo-ai. You will find there the Metacello scrip to install that library. After installing it, we can test the accurancy of the logistic of linear regression models.
 
