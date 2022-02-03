@@ -10,9 +10,10 @@
 - [How to depend on it](#how-to-depend-on-it)
 - [Linear regression](#linear-regression)
 - [Logistic regression](#logistic-regression)
-- [Measuring the accuracy of a model](#measuring-the-accuracy-of-a-model)
 
 ## Description
+
+For more information please refer to the pharo-ai wiki: https://github.com/pharo-ai/wiki
 
 This is a library that implements two of the most-know linear models: Linear and Logistic regression.
 
@@ -62,7 +63,6 @@ linearRegressionModel := AILinearRegression new
 	
 linearRegressionModel fitX: input y: output.
 ```
-
 Now we can look at the trained parameters. The real relationship between x and y is _y = 2*x1 + 10*x2 - x3_, so the parameters should be close to _b=0_, _w1=2_, _w2=10_, _w3=-1_.
 
 ```Smalltalk
@@ -95,6 +95,7 @@ For example, if we have a function:
  f(x) = 1   if x ≥ 0
         0   if x < 0
 ```
+
 that returns `1` for all positive numbers including 0, and `0` for all negative numbers.
 We can train a logistic model for making predictions when a new number arrives.
 
@@ -149,33 +150,3 @@ logisticRegressionModel predictProbabilities: testInput
 
 In our example, we have a `0.05335185163762839` probability that the output for `-3`  is `1`. Also we have a `0.9999331093095885` probability that the output for `10` is `1`.
 
-## Measuring the accuracy of a model
-
-To measure the accuracy of the model we have a library [metrics](https://github.com/pharo-ai/metrics) in pharo-ai. You will find there the Metacello scrip to install that library. After installing it, we can test the accurancy of the logistic of linear regression models.
-
-For example, let's image that our logistic regression model has produced the following output.
-
-```st
-prediction := logisticRegressionModel predict: someValues
-"#( 1 3 5 7 4 2)"
-```
-
-And we know that we the real values are:
-```st
-realValues := #(1 3.5 4 7 3.5 1)
-```
-
-So, we can test the accuracy of the model using the metrics that we just installed.
-For the previous values, we can compute the r2 score (the coefficient of determination).
-
-```st
-prediction := #( 1 3 5 7 4 2).
-realValues := #(1 3.5 4 7 3.5 1).
-
-metric := AIR2Score new.
-metric computeForActual: realValues predicted: prediction.
-"0.8993288590604027"
-```
-So, our model has a r2 score 0.89. A R2 score of 1 indicates that the model is predicting perfectly.
-
-For more information about please refer to our [metrics library](https://github.com/pharo-ai/metrics) where we explain all the available metrics that we have, what those metrics represent and how to use them.
