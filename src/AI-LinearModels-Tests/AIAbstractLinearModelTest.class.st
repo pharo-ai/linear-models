@@ -7,6 +7,23 @@ Class {
 	#category : #'AI-LinearModels-Tests'
 }
 
+{ #category : #testing }
+AIAbstractLinearModelTest class >> isAbstract [ 
+^self == AIAbstractLinearModelTest 
+]
+
+{ #category : #running }
+AIAbstractLinearModelTest >> regression [
+^self subclassResponsibility 
+]
+
+{ #category : #running }
+AIAbstractLinearModelTest >> setUp [
+	super setUp.
+	
+	model := self regression.
+]
+
 { #category : #tests }
 AIAbstractLinearModelTest >> testFitEmptyInputMatrix [
 
@@ -15,11 +32,7 @@ AIAbstractLinearModelTest >> testFitEmptyInputMatrix [
 	| input output |
 	input := #(  ).
 	output := #( #( 1 ) ).
-	model := AIAbstractLinearModel new
-		         learningRate: 0.01;
-		         maxIterations: 3000;
-		         yourself.
-
+	
 	self should: [ model fitX: input y: output ] raise: Error
 ]
 
@@ -31,10 +44,6 @@ AIAbstractLinearModelTest >> testFitEmptyOutputValues [
 	| input output |
 	input := #( #( 5 ) #( 3 ) ).
 	output := #(  ).
-	model := AIAbstractLinearModel new
-		         learningRate: 0.01;
-		         maxIterations: 3000;
-		         yourself.
 
 	self should: [ model fitX: input y: output ] raise: Error
 ]
@@ -46,11 +55,6 @@ AIAbstractLinearModelTest >> testInconsistentFitInputOnType [
 	input := #( #( 'number' ) #( 3 ) #( 1 ) ).
 	output := #( 1 3 1 ).
 
-	model := AIAbstractLinearModel new
-		         learningRate: 0.01;
-		         maxIterations: 3000;
-		         yourself.
-
 	self should: [ model fitX: input y: output ] raise: Error
 ]
 
@@ -61,11 +65,6 @@ AIAbstractLinearModelTest >> testInconsistentFitOnDimension [
 	input := #( #( 2 ) #( 3 ) ).
 	output := #( #( 1 ) ).
 
-	model := AIAbstractLinearModel new
-		         learningRate: 0.01;
-		         maxIterations: 3000;
-		         yourself.
-
 	self should: [ model fitX: input y: output ] raise: Error
 ]
 
@@ -75,11 +74,6 @@ AIAbstractLinearModelTest >> testInconsistentFitOutputOnType [
 	| input output |
 	input := #( #( 1 ) #( 3 ) #( 1 ) ).
 	output := #( 'number' 3 1 ).
-
-	model := AIAbstractLinearModel new
-		         learningRate: 0.01;
-		         maxIterations: 3000;
-		         yourself.
 
 	self should: [ model fitX: input y: output ] raise: Error
 ]
@@ -115,51 +109,10 @@ AIAbstractLinearModelTest >> testInconsistentMaxIterations [
 ]
 
 { #category : #tests }
-AIAbstractLinearModelTest >> testInconsistentPredictionInputOnType [
-
-	| input output1 output2 newInput actualOutput |
-	
-	input := #( #( 2 ) #( 3 ) #( -1 ) ).
-	output1 := #( 3 4 0 ).
-	output2 := #( 1 1 0 ).
-	newInput := #( #( 'number' ) #( 1 ) #( 7 ) ).
-
-	model := AILinearRegression new
-		         learningRate: 0.01;
-		         maxIterations: 3000;
-		         yourself.
-
-	model fitX: input y: output1.
-
-	self should: [ actualOutput := model predict: newInput ] raise: Error.
-	
-model := AILogisticRegression new
-		         learningRate: 0.01;
-		         maxIterations: 3000;
-		         yourself.
-
-	model fitX: input y: output2.
-
-	self should: [ actualOutput := model predict: newInput ] raise: Error
-]
-
-{ #category : #tests }
 AIAbstractLinearModelTest >> testPredictionWithNonFittedModel [
 
 	| input output |
 	input := #( #( 2 ) #( 3 ) #( 1 ) ).
 
-	model := AILinearRegression new
-		         learningRate: 0.01;
-		         maxIterations: 3000;
-		         yourself.
-
-	self should: [ output := model predict: input ] raise: Error.
-
-	model := AILogisticRegression new
-		         learningRate: 0.01;
-		         maxIterations: 3000;
-		         yourself.
-		
-	self should: [ output := model predict: input ] raise: Error.
+	self should: [ output := model predict: input ] raise: Error
 ]

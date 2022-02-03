@@ -5,9 +5,9 @@ Class {
 }
 
 { #category : #running }
-AILinearRegressionTest >> setUp [
-	super setUp.
-	model := AILinearRegression new.
+AILinearRegressionTest >> regression [
+
+	^ AILinearRegression new
 ]
 
 { #category : #tests }

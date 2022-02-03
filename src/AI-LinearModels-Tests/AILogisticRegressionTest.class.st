@@ -14,10 +14,9 @@ AILogisticRegressionTest >> generateRandomNumber: random between: lowerBound and
 ]
 
 { #category : #running }
-AILogisticRegressionTest >> setUp [
+AILogisticRegressionTest >> regression [
 
-	super setUp.
-	model := AILogisticRegression new
+	^AILogisticRegression new
 ]
 
 { #category : #tests }
