@@ -40,8 +40,6 @@ spec
 
 ## Linear regression
 
-Linear regression is a machine learning model that attempts to find the the linear relationship between one or more input variables _x1, x2, ..., xn_ and an output variable _y_. It finds a set of parameters _b, w1, w2, ..., wn_ such that the predicted output _h(x) = b + w1 * x1 + ... + wn * xn_ is as close as possible to the real output _y_.
-
 Given 20 input vectors _x = (x1, x2, x3)_ and 20 output values _y_.
 
 ```Smalltalk
@@ -53,7 +51,7 @@ input := #( (-6 0.44 3) (4 -0.45 -7) (-4 -0.16 4) (9 0.17 -8) (-6 -0.41 8)
 output := #(-10.6 10.5 -13.6 27.7 -24.1 12.3 -2.6 -0.2 12.2 -22.1 -10.5 -24.3 2.1 14.9 -11.8 3.3 1.3 -8.1 -16.1 -8.9).
 ```
 
-We want to find the linear relationship between the input and the output. In other words, we need to find such parameters _b, w1, w2, w3_ that the line _h(x) = b + w1 * x1 + w2 * x2 + w3 * x3_ fits the data as closely as possible. To do that, we initialize a linear regression model and fit it to the data.
+We want to find the linear relationship between the input and the output.
 
 ```Smalltalk
 linearRegressionModel := AILinearRegression new
@@ -63,7 +61,10 @@ linearRegressionModel := AILinearRegression new
 	
 linearRegressionModel fitX: input y: output.
 ```
-Now we can look at the trained parameters. The real relationship between x and y is _y = 2*x1 + 10*x2 - x3_, so the parameters should be close to _b=0_, _w1=2_, _w2=10_, _w3=-1_.
+
+Now we can look at the trained parameters.
+
+The real relationship between x and y is _y = 2*x1 + 10*x2 - x3_, so the parameters should be close to _b=0_, _w1=2_, _w2=10_, _w3=-1_.
 
 ```Smalltalk
 b := linearRegressionModel bias.
@@ -88,9 +89,7 @@ linearRegressionModel predict: testInput.
 
 ## Logistic regression
 
-Logistic regression is a statistical model that predicts the likehood that an event can happen giving as an output the probability.
-
-For example, if we have a function: 
+If we have a function: 
 ```
  f(x) = 1   if x ≥ 0
         0   if x < 0
