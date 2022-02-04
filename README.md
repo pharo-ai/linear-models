@@ -34,8 +34,8 @@ If you want to add a dependency on `linear-models` to your project, include the 
 
 ```Smalltalk
 spec
-  baseline: 'AILinearRegression'
-  with: [ spec repository: 'github://pharo-ai/linear-regression/src' ].
+  baseline: 'AILinearModels'
+  with: [ spec repository: 'github://pharo-ai/linear-models/src' ].
 ```
 
 ## Linear regression
