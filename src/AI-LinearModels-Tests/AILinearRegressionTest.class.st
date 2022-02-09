@@ -32,6 +32,25 @@ AILinearRegressionTest >> testBiasAlmostEqual [
 ]
 
 { #category : #tests }
+AILinearRegressionTest >> testDivergingException [
+
+	"Training the model with non-sense, completely unproportioned data and with a very high learning rate to raise the diverging exception."
+
+	|input output |
+
+	input := #( #( 13421525235235235235 ) #( 3 ) #( 0.1 ) #( 0.000005 ) #( 241241241124124124 ) #( 6412412412414 ) #(45345) #(5) #(53) #(5) #(3) #(1) #(2) #(1) #(0.09) #(0.4) #(0.0009) #(5) #(234242342423423) #(0.9888) #(0.0000009) ).
+	
+	output := #( 4 234 523 523 5 63456346346346 636463 63463 0.253 0.84234 0.00042 243 4 2 2 5 2 5235235 0.0005 3 3 ).
+
+	model := AILinearRegression new
+		learningRate: 100;
+		maxIterations: 3000;
+		yourself.
+
+	self should: [model fitX: input y: output] raise: ModelStartingToDivergeException
+]
+
+{ #category : #tests }
 AILinearRegressionTest >> testExactFitSingleVariable [
 
 	| function input output newInput expectedOutput actualOutput |
