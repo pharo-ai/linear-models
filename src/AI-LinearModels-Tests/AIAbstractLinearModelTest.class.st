@@ -109,6 +109,16 @@ AIAbstractLinearModelTest >> testInconsistentMaxIterations [
 ]
 
 { #category : #tests }
+AIAbstractLinearModelTest >> testInitializeWeightsToZeroOfSize [
+
+	| expectedInitWeigths |
+	expectedInitWeigths := #(0 0 0).
+	model initializeWeightsToZeroOfSize: 3.
+	
+	self assert: model weights equals: expectedInitWeigths   
+]
+
+{ #category : #tests }
 AIAbstractLinearModelTest >> testLearningRateIsInitialized [
 
 	self
