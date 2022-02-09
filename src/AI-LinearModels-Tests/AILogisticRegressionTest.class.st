@@ -20,6 +20,25 @@ AILogisticRegressionTest >> regression [
 ]
 
 { #category : #tests }
+AILogisticRegressionTest >> testDivergingException [
+
+	"Training the model with non-sense, completely unproportioned data and with a very high learning rate to raise the diverging exception."
+
+	|input output |
+
+	input := #( #( 13421525235235235235 ) #( 3 ) #( 0.1 ) #( 0.000005 ) #( 241241241124124124 ) #( 6412412412414 ) #(45345) #(5) #(53) #(5) #(3) #(1) #(2) #(1) #(0.09) #(0.4) #(0.0009) #(5) #(234242342423423) #(0.9888) #(0.0000009) ).
+	
+	output := (1 to: input size) collect: [ :e | 0 ].
+
+	model := AILogisticRegression new
+		learningRate: 100;
+		maxIterations: 3000;
+		yourself.
+
+	self should: [model fitX: input y: output] raise: ModelStartingToDivergeException
+]
+
+{ #category : #tests }
 AILogisticRegressionTest >> testExactFitSingleVariable [
 
 	| output newInput expectedOutput actualOutput inputPositive inputNegative input |
