@@ -28,7 +28,7 @@ AILinearRegressionTest >> testBiasAlmostEqual [
 
 	model fitX: input y: output.
 
-	self deny: realBias closeTo: model bias
+	self assert: realBias closeTo: model bias
 ]
 
 { #category : #tests }
