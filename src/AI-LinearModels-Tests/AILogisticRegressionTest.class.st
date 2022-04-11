@@ -73,32 +73,6 @@ AILogisticRegressionTest >> testExactFitSingleVariable [
 ]
 
 { #category : #tests }
-AILogisticRegressionTest >> testInconsistentFitOutputOnClasses [
-
-	| output inputPositive inputNegative input |
-	"From -4 to 4, positives numbers are 1 and the negatives are 0"
-	inputNegative := #( #( -3.2 ) #( -3.6 ) #( -2.54 ) #( -1.64 )
-	                    #( -2.875 ) #( -1.867567 ) #( -0.876 )
-	                    #( -0.0231421 ) #( -3.4242 ) #( -0.223 )
-	                    #( -1.343 ) ).
-	inputPositive := #( #( 0.01 ) #( 1.767 ) #( 2.87578 ) #( 3.79867 )
-	                    #( 1.767 ) #( 2.0987897 ) #( 1.79090 )
-	                    #( 3.2322 ) #( 2.4242 ) #( 1.232342 )
-	                    #( 0.42424 ) ).
-
-	input := inputPositive , inputNegative.
-	output := (inputPositive collect: [ :e | 1 ])
-	          , (inputNegative collect: [ :e | 0 ]).
-	output at: 1 put: 2.
-
-	model := AILogisticRegression new
-		         learningRate: 0.1;
-		         maxIterations: 2000;
-		         yourself.
-	self skip.
-]
-
-{ #category : #tests }
 AILogisticRegressionTest >> testPredictProbabilities [
 
 	| output newInput expectedOutput actualOutput inputPositive inputNegative input actualOutputPositive actualOutputNegative |
