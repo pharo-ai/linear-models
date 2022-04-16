@@ -13,22 +13,19 @@ AILinearRegressionTest >> regression [
 { #category : #tests }
 AILinearRegressionTest >> testBiasAlmostEqual [
 
-	| function realWeights realBias input output |
-	realWeights := #( 2 ).
-	realBias := 5.
-	function := [ :x | (realWeights at: 1) * x + realBias ].
-
-	input := #( #( 2 ) #( 3 ) #( 1 ) #( 5 ) #( 2 ) #( 6 ) ).
-	output := input collect: [ :x | function value: x first ].
+	| fixture |
+	fixture := AILinearRegressionFixture new.
 
 	model := AILinearRegression new
-		         learningRate: 0.01;
-		         maxIterations: 3000;
-		         yourself.
+		learningRate: 0.01;
+		maxIterations: 3000;
+		yourself.
 
-	model fitX: input y: output.
+	model
+		fitX: fixture inputMatrix
+		y: fixture outputVector.
 
-	self assert: realBias closeTo: model bias
+	self assert: model bias closeTo: fixture bias
 ]
 
 { #category : #tests }
@@ -77,22 +74,18 @@ AILinearRegressionTest >> testExactFitSingleVariable [
 { #category : #tests }
 AILinearRegressionTest >> testWeightsAlmostEqual [
 
-	| function realWeights realBias input output |
-	realWeights := #( 2 ).
-	realBias := 5.
-	function := [ :x | (realWeights at: 1) * x + realBias ].
-
-	input := #( #( 2 ) #( 3 ) #( 1 ) #( 5 ) #( 2 ) #( 6 ) ).
-	output := input collect: [ :x | function value: x first ].
+	| fixture |
+	fixture := AILinearRegressionFixture new.
 
 	model := AILinearRegression new
-		         learningRate: 0.01;
-		         maxIterations: 3000;
-		         yourself.
+		learningRate: 0.01;
+		maxIterations: 3000;
+		yourself.
 
-	model fitX: input y: output.
+	model
+		fitX: fixture inputMatrix
+		y: fixture outputVector.
 
-	realWeights
-		with: model weights
-		do: [ :real :modeled | self assert: real closeTo: modeled ]
+	fixture weights with: model weights do: [ :expected :actual |
+		self assert: actual closeTo: expected ]
 ]
