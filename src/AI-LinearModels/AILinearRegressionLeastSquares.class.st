@@ -11,6 +11,12 @@ Class {
 	#category : #'AI-LinearModels-Linear regression'
 }
 
+{ #category : #accessing }
+AILinearRegressionLeastSquares >> bias [
+
+	^ bias
+]
+
 { #category : #api }
 AILinearRegressionLeastSquares >> fitX: inputMatrix y: outputVector [
 
@@ -63,4 +69,10 @@ AILinearRegressionLeastSquares >> weightedSumOf: inputMatrix [
 
 	^ inputMatrix collect: [:row |
 		(row * weights) sum + bias ]
+]
+
+{ #category : #accessing }
+AILinearRegressionLeastSquares >> weights [
+
+	^ weights
 ]
