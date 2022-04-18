@@ -13,11 +13,16 @@ extern int count_rows(char* filename);
 extern int count_columns(char* filename);
 extern void read_csv(int rows, int columns, char* filename, double* array);
 
+/* Constants */
+#define LINE_BUFFER_SIZE 4098
+
 #define MAX(x, y) (((x) > (y)) ? (x) : (y))
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
 /* Parameters */
 #define NRHS 1
+#define X_FILENAME "data/boston-train.csv"
+#define Y_FILENAME "data/boston-train-labels.csv"
 
 int main() {
     /* Locals */
@@ -28,7 +33,7 @@ int main() {
     double wkopt;
     double* work;
 
-    char* filename = "data/boston-train.csv";
+    char* filename = X_FILENAME;
     int rows = count_rows(filename);
     int columns = count_columns(filename);
 
@@ -36,9 +41,7 @@ int main() {
     double* b = (double*) malloc(rows * sizeof(double));
 
     read_csv(rows, columns, filename, a);
-
-    filename = "data/boston-train-labels.csv";
-    read_csv(rows, 1, filename, b);
+    read_csv(rows, 1, Y_FILENAME, b);
 
     int lda = MAX(1, rows);
     int ldb = MAX(1, MAX(rows, columns));
@@ -47,7 +50,7 @@ int main() {
     double* s = (double*) malloc(rows * sizeof(double));
 
     /* Executable statements */
-    printf(" SGELSD Example Program Results\n");
+    printf(" DGELSD Example Program Results\n");
 
     /* Query and allocate the optimal workspace */
     lwork = -1;
@@ -102,8 +105,8 @@ int count_rows(char* filename) {
 int count_columns(char* filename) {
     FILE* file = fopen(filename, "r");
 
-    char line[4098];
-    fgets(line, 4098, file);
+    char line[LINE_BUFFER_SIZE];
+    fgets(line, LINE_BUFFER_SIZE, file);
 
     fclose(file);
 
@@ -120,8 +123,8 @@ void read_csv(int rows, int columns, char* filename, double* array){
     FILE* file = fopen(filename, "r");
     int i = 0;
 
-    char line[4098];
-    while (fgets(line, 4098, file) && (i < rows))
+    char line[LINE_BUFFER_SIZE];
+    while (fgets(line, LINE_BUFFER_SIZE, file) && (i < rows))
     {
         char* tmp = strdup(line);
 
@@ -142,7 +145,7 @@ void print_matrix(char* desc, int m, int n, double* a, int lda) {
     int i, j;
     printf("\n %s\n", desc);
     for (i = 0; i < m; i++) {
-        for (j = 0; j < n; j++) printf("%6.2f", a[i+j*lda]);
+        for (j = 0; j < n; j++) printf("%6.6f", a[i+j*lda]);
         printf("\n");
     }
 }
