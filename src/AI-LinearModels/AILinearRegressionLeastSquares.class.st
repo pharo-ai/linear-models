@@ -33,7 +33,7 @@ AILinearRegressionLeastSquares >> fitX: inputMatrix y: outputVector [
 	leastSquares solve.
 	
 	weights := leastSquares minimumNormSolution first: inputMatrix first size.
-	bias := yOffset - (xOffset * weights)
+	bias := yOffset - (xOffset * weights) sum
 ]
 
 { #category : #running }
