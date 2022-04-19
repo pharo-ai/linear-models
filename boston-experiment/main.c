@@ -1,3 +1,5 @@
+/* Based on: https://www.intel.com/content/www/us/en/develop/documentation/onemkl-lapack-examples/top/least-squares-and-eigenvalue-problems/linear-least-squares-lls-problems/gelsd-function/dgelsd-example/lapacke-dgelsd-example-c-row.html */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
