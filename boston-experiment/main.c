@@ -1,4 +1,10 @@
-/* Based on: https://www.intel.com/content/www/us/en/develop/documentation/onemkl-lapack-examples/top/least-squares-and-eigenvalue-problems/linear-least-squares-lls-problems/gelsd-function/dgelsd-example/lapacke-dgelsd-example-c-row.html */
+/* Based on: https://www.intel.com/content/www/us/en/develop/documentation/onemkl-lapack-examples/top/least-squares-and-eigenvalue-problems/linear-least-squares-lls-problems/gelsd-function/dgelsd-example/lapacke-dgelsd-example-c-row.html
+
+This code simply loads the data from CSV files, makes a call
+to Lapack DGELSD routine, and prints the result.
+
+There is no data preprocessing - matrices A and B are not modified.
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
