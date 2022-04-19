@@ -148,14 +148,12 @@ void read_csv(int rows, int columns, char* filename, double* array){
     int i = 0;
 
     char line[LINE_BUFFER_SIZE];
-    while (fgets(line, LINE_BUFFER_SIZE, file) && (i < rows))
-    {
+    while (fgets(line, LINE_BUFFER_SIZE, file) && (i < rows)) {
         char* tmp = strdup(line);
 
         int j = 0;
         const char* tok;
-        for (tok = strtok(line, ","); tok && *tok; j++, tok = strtok(NULL, ",\n"))
-        {
+        for (tok = strtok(line, ","); tok && *tok; j++, tok = strtok(NULL, ",\n")) {
             array[i * columns + j] = atof(tok);
         }
 
