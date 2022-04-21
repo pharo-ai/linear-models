@@ -28,17 +28,14 @@ AILinearRegressionLeastSquares >> fitX: inputMatrix y: outputVector [
 	centeredInputMatrix := inputMatrix collect: [ :each | each - xOffset ].
 	centeredOutputVector := outputVector - yOffset.
 
-	leastSquares := LapackDgelsd new
-		numberOfRows: centeredInputMatrix size;
-		numberOfColumns: centeredInputMatrix first size;
-		numberOfRightHandSides: 1;
-		matrixA: centeredInputMatrix flattened;
-		matrixB: centeredOutputVector;
+	leastSquares := AILeastSquares new
+		matrixA: centeredInputMatrix asAIMatrix;
+		matrixB: centeredOutputVector asAIMatrix;
 		yourself.
 	
 	leastSquares solve.
 	
-	weights := leastSquares minimumNormSolution first: inputMatrix first size.
+	weights := leastSquares solution first: inputMatrix first size.
 	bias := yOffset - (xOffset * weights) sum
 ]
 

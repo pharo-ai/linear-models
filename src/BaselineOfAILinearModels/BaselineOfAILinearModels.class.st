@@ -13,11 +13,11 @@ BaselineOfAILinearModels >> baseline: spec [
 	spec for: #common do: [
 		"External dependencies"
 		spec
-			baseline: 'Lapack'
-			with: [ spec repository: 'github://pharo-ai/lapack/src' ].
+			baseline: 'AILinearAlgebra'
+			with: [ spec repository: 'github://pharo-ai/linear-algebra/src' ].
 		
 		"Packages"
 		spec 
-			package: 'AI-LinearModels' with: [ spec requires: #('Lapack') ];
+			package: 'AI-LinearModels' with: [ spec requires: #('AILinearAlgebra') ];
 			package: 'AI-LinearModels-Tests' with: [ spec requires: #('AI-LinearModels') ] ].
 ]
