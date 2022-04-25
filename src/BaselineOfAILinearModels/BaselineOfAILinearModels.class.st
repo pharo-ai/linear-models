@@ -15,6 +15,10 @@ BaselineOfAILinearModels >> baseline: spec [
 		spec
 			baseline: 'AILinearAlgebra'
 			with: [ spec repository: 'github://pharo-ai/linear-algebra/src' ].
+			
+		spec
+			baseline: 'PolyMath'
+			with: [ spec repository: 'github://jordanmontt/PolyMath:least-squares/src' ].
 		
 		"Packages"
 		spec 

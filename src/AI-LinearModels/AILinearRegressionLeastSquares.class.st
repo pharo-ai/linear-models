@@ -27,15 +27,11 @@ AILinearRegressionLeastSquares >> fitX: inputMatrix y: outputVector [
 	
 	centeredInputMatrix := inputMatrix collect: [ :each | each - xOffset ].
 	centeredOutputVector := outputVector - yOffset.
+	
+	weights := self
+		solveLeastSquaresInputMatrix: centeredInputMatrix
+		outputVector: centeredOutputVector.
 
-	leastSquares := AILeastSquares new
-		matrixA: centeredInputMatrix asAIMatrix;
-		matrixB: centeredOutputVector asAIMatrix;
-		yourself.
-	
-	leastSquares solve.
-	
-	weights := leastSquares solution first: inputMatrix first size.
 	bias := yOffset - (xOffset * weights) sum
 ]
 
@@ -53,6 +49,19 @@ AILinearRegressionLeastSquares >> hypothesisFunction: inputMatrix [
 AILinearRegressionLeastSquares >> predict: inputMatrix [
 
 	^ self hypothesisFunction: inputMatrix
+]
+
+{ #category : #'as yet unclassified' }
+AILinearRegressionLeastSquares >> solveLeastSquaresInputMatrix: aMatrix outputVector: aVector [
+
+	| leastSquares |
+	leastSquares := AILeastSquares new
+		matrixA: aMatrix asAIMatrix;
+		matrixB: aVector asAIMatrix;
+		yourself.
+	
+	leastSquares solve.
+	^ leastSquares solution first: aMatrix first size.
 ]
 
 { #category : #running }
