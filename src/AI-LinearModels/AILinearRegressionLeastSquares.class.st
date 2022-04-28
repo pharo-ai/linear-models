@@ -17,17 +17,44 @@ AILinearRegressionLeastSquares >> bias [
 	^ bias
 ]
 
+{ #category : #training }
+AILinearRegressionLeastSquares >> calculateAverageMatrix: aMatrix [
+
+	"This is the same as doing `aMAtrix average`.
+	But written this way is faster"
+
+	| average |
+	average := Array new: aMatrix first size.
+	1 to: aMatrix first size do: [ :i | 
+		| averageOfAVector |
+		averageOfAVector := ((aMatrix sum: [ :e | e at: i ]) / aMatrix size) asFloat.
+		average at: i put: averageOfAVector ].
+
+	^ average
+]
+
+{ #category : #training }
+AILinearRegressionLeastSquares >> calculateAverageVector: vector [
+
+	| sum |
+	sum := 0.
+	1 to: vector size do: [ :i | sum := sum + (vector at: i) ].
+	^ (sum / vector size) asFloat
+]
+
 { #category : #api }
 AILinearRegressionLeastSquares >> fitX: inputMatrix y: outputVector [
 
-	| leastSquares xOffset yOffset centeredInputMatrix centeredOutputVector |
-	
-	xOffset := inputMatrix average.
-	yOffset := outputVector average.
-	
-	centeredInputMatrix := inputMatrix collect: [ :each | each - xOffset ].
+	| xOffset yOffset centeredInputMatrix centeredOutputVector |
+	xOffset := self calculateAverageMatrix: inputMatrix.
+	yOffset := self calculateAverageVector: outputVector.
+
+	centeredInputMatrix := Array new: inputMatrix size.
+	1 to: inputMatrix size do: [ :index | 
+		centeredInputMatrix at: index put: (inputMatrix at: index) - xOffset ].
+
 	centeredOutputVector := outputVector - yOffset.
-	
+
 	weights := self
 		solveLeastSquaresInputMatrix: centeredInputMatrix
 		outputVector: centeredOutputVector.
@@ -51,7 +78,7 @@ AILinearRegressionLeastSquares >> predict: inputMatrix [
 	^ self hypothesisFunction: inputMatrix
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #training }
 AILinearRegressionLeastSquares >> solveLeastSquaresInputMatrix: aMatrix outputVector: aVector [
 
 	| leastSquares |
@@ -61,6 +88,7 @@ AILinearRegressionLeastSquares >> solveLeastSquaresInputMatrix: aMatrix outputVe
 		yourself.
 	
 	leastSquares solve.
+	
 	^ leastSquares solution first: aMatrix first size.
 ]
 
@@ -68,13 +96,21 @@ AILinearRegressionLeastSquares >> solveLeastSquaresInputMatrix: aMatrix outputVe
 AILinearRegressionLeastSquares >> weightedSumOf: inputMatrix [
 
 	"z = Xw + b"
+
 	"As X is a matrix we need to multiplicate each of the rows, the rows are the data, with the weights.
 	Each of the rows has n size. n being the number of features.
 	After the multiplication of a row with all the weights, we need to sum all the elements and add the bias.
 	Then we return a vector of the same size of the original inputMatrix."
 
-	^ inputMatrix collect: [:row |
-		(row * weights) sum + bias ]
+	| weightedSum |
+	weightedSum := Array new: inputMatrix size.
+	1 to: inputMatrix size do: [ :index | 
+		| sum row |
+		row := (inputMatrix at: index).
+		sum := (row * weights) sum + bias.
+		weightedSum at: index add: sum ].
+
+	^ weightedSum
 ]
 
 { #category : #accessing }
