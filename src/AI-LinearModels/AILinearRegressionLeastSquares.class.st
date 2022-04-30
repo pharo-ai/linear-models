@@ -17,37 +17,12 @@ AILinearRegressionLeastSquares >> bias [
 	^ bias
 ]
 
-{ #category : #training }
-AILinearRegressionLeastSquares >> calculateAverageMatrix: aMatrix [
-
-	"This is the same as doing `aMAtrix average`.
-	But written this way is faster"
-
-	| average |
-	average := Array new: aMatrix first size.
-	1 to: aMatrix first size do: [ :i | 
-		| averageOfAVector |
-		averageOfAVector := ((aMatrix sum: [ :e | e at: i ]) / aMatrix size) asFloat.
-		average at: i put: averageOfAVector ].
-
-	^ average
-]
-
-{ #category : #training }
-AILinearRegressionLeastSquares >> calculateAverageVector: vector [
-
-	| sum |
-	sum := 0.
-	1 to: vector size do: [ :i | sum := sum + (vector at: i) ].
-	^ (sum / vector size) asFloat
-]
-
 { #category : #api }
 AILinearRegressionLeastSquares >> fitX: inputMatrix y: outputVector [
 
 	| xOffset yOffset centeredInputMatrix centeredOutputVector |
-	xOffset := self calculateAverageMatrix: inputMatrix.
-	yOffset := self calculateAverageVector: outputVector.
+	xOffset := inputMatrix averageForMatrix.
+	yOffset := outputVector averageForVector.
 
 	centeredInputMatrix := Array new: inputMatrix size.
 	1 to: inputMatrix size do: [ :index | 
