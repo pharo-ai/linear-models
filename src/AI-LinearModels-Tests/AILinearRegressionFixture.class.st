@@ -11,7 +11,7 @@ Class {
 { #category : #accessing }
 AILinearRegressionFixture >> bias [
 
-	^ 5
+	^ 3
 	
 ]
 
@@ -26,7 +26,7 @@ AILinearRegressionFixture >> outputVector [
 
 	| function |
 	function := [ :x | (self weights at: 1) * x + self bias ].
-	
+
 	^ self inputMatrix collect: [ :x | function value: x first ]
 ]
 
