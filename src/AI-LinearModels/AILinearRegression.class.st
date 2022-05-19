@@ -126,6 +126,6 @@ AILinearRegression >> weightDerivativeforX: inputMatrix costDerivative: costDeri
 	weightsDerivative := inputMatrix
 		with: costDerivativeVector
 		collect: [ :x : cost | x * cost ].
-	
+
 	^ weightsDerivative average
 ]

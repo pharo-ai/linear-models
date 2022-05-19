@@ -51,6 +51,11 @@ AIAbstractLinearModel >> bias [
 	^ bias
 ]
 
+{ #category : #accessing }
+AIAbstractLinearModel >> bias: anInteger [ 
+	bias := anInteger
+]
+
 { #category : #running }
 AIAbstractLinearModel >> biasDerivative: arg1 [ 
 	^ self subclassResponsibility
@@ -220,4 +225,9 @@ AIAbstractLinearModel >> weightedSumOf: inputMatrix [
 AIAbstractLinearModel >> weights [
 
 	^ weights
+]
+
+{ #category : #accessing }
+AIAbstractLinearModel >> weights: aCollection [ 
+	weights := aCollection
 ]
