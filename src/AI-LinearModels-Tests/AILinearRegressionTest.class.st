@@ -95,8 +95,8 @@ AILinearRegressionTest >> testExactFitSingleVariable [
 AILinearRegressionTest >> testWeightDerivativeforXCostDerivative [
 	
 	self
-		assert: (model weightDerivativeforX: #( (1 2 3) (4 5 6) (7 8 9) ) costDerivative: #( 9 8 7 ))
-		equals: #( 30 38 46 )
+		assert: (model weightDerivativeforX: #( (1 2 3) (4 5 6) (7 8 9) (10 11 12) ) costDerivative: #( 9 8 7 6 ))
+		equals: #( 37.5 45 52.5 )
 ]
 
 { #category : #tests }
