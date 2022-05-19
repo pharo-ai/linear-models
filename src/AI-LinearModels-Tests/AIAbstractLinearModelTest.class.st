@@ -14,20 +14,29 @@ AIAbstractLinearModelTest class >> isAbstract [
 
 { #category : #running }
 AIAbstractLinearModelTest >> regression [
-^self subclassResponsibility 
+
+	^ self subclassResponsibility
 ]
 
 { #category : #running }
 AIAbstractLinearModelTest >> setUp [
+
 	super setUp.
-	
-	model := self regression.
+	model := self regression
+]
+
+{ #category : #tests }
+AIAbstractLinearModelTest >> testDivergingException [
+	^ self subclassResponsibility
+]
+
+{ #category : #tests }
+AIAbstractLinearModelTest >> testExactFitSingleVariable [
+	^ self subclassResponsibility
 ]
 
 { #category : #tests }
 AIAbstractLinearModelTest >> testFitEmptyInputMatrix [
-
-	"It should be better to raise the exception at the initialization of the LinearModel"
 
 	| input output |
 	input := #(  ).
@@ -39,21 +48,9 @@ AIAbstractLinearModelTest >> testFitEmptyInputMatrix [
 { #category : #tests }
 AIAbstractLinearModelTest >> testFitEmptyOutputValues [
 
-	"It should be better to raise the exception at the initialization of the LinearModel"
-
 	| input output |
 	input := #( #( 5 ) #( 3 ) ).
 	output := #(  ).
-
-	self should: [ model fitX: input y: output ] raise: Error
-]
-
-{ #category : #tests }
-AIAbstractLinearModelTest >> testInconsistentFitInputOnType [
-
-	| input output |
-	input := #( #( 'number' ) #( 3 ) #( 1 ) ).
-	output := #( 1 3 1 ).
 
 	self should: [ model fitX: input y: output ] raise: Error
 ]
@@ -66,46 +63,6 @@ AIAbstractLinearModelTest >> testInconsistentFitOnDimension [
 	output := #( #( 1 ) ).
 
 	self should: [ model fitX: input y: output ] raise: Error
-]
-
-{ #category : #tests }
-AIAbstractLinearModelTest >> testInconsistentFitOutputOnType [
-
-	| input output |
-	input := #( #( 1 ) #( 3 ) #( 1 ) ).
-	output := #( 'number' 3 1 ).
-
-	self should: [ model fitX: input y: output ] raise: Error
-]
-
-{ #category : #tests }
-AIAbstractLinearModelTest >> testInconsistentLearningRate [
-
-	"It should be better to raise the exception at the initialization of the LinearModel
-
-	self
-		should: [ 
-			model := AIAbstractLinearModel new
-				         learningRate: 'learningRate';
-				         maxIterations: 2000;
-				         yourself ]
-		raise: Error"
-		self skip.
-]
-
-{ #category : #tests }
-AIAbstractLinearModelTest >> testInconsistentMaxIterations [
-
-	"It should be better to raise the exception at the initialization of the LinearModel
-
-	self
-		should: [ 
-			model := AIAbstractLinearModel new
-				         learningRate: 0.1;
-				         maxIterations: 'number';
-				         yourself ]
-		raise: Error"
-		self skip
 ]
 
 { #category : #tests }
@@ -145,4 +102,14 @@ AIAbstractLinearModelTest >> testPredictionWithNonFittedModel [
 	input := #( #( 2 ) #( 3 ) #( 1 ) ).
 
 	self should: [ output := model predict: input ] raise: Error
+]
+
+{ #category : #tests }
+AIAbstractLinearModelTest >> testWeightedSumOf [
+
+	model bias: 2.
+	model weights: #(4 5 6).
+	self
+		assertCollection: (model weightedSumOf: #( (1 2 3) (4 5 6) (7 8 9) ))
+		hasSameElements: #( 34 79 124 )
 ]

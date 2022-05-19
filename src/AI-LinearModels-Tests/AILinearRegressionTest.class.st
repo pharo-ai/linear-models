@@ -29,6 +29,26 @@ AILinearRegressionTest >> testBiasAlmostEqual [
 ]
 
 { #category : #tests }
+AILinearRegressionTest >> testBiasDerivative [
+
+	self
+		assert: (model biasDerivative: #( 3 4 5 6))
+		equals: 4.5
+]
+
+{ #category : #tests }
+AILinearRegressionTest >> testCostDerivativeActual [
+
+	self
+		assert: (model costDerivative: #( 10 20 30 ) actual: #( 11 22 33 ))
+		equals: #(-2 -4 -6).
+	
+	self
+		assert: (model costDerivative: #( 11 22 33 ) actual: #( 10 20 30 ))
+		equals: #(2 4 6)
+]
+
+{ #category : #tests }
 AILinearRegressionTest >> testDivergingException [
 
 	"Training the model with non-sense, completely unproportioned data and with a very high learning rate to raise the diverging exception."
@@ -69,6 +89,14 @@ AILinearRegressionTest >> testExactFitSingleVariable [
 	actualOutput
 		with: expectedOutput
 		do: [ :actual :expected | self assert: actual closeTo: expected ]
+]
+
+{ #category : #tests }
+AILinearRegressionTest >> testWeightDerivativeforXCostDerivative [
+	
+	self
+		assert: (model weightDerivativeforX: #( (1 2 3) (4 5 6) (7 8 9) ) costDerivative: #( 9 8 7 ))
+		equals: #( 30 38 46 )
 ]
 
 { #category : #tests }
