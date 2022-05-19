@@ -33,3 +33,9 @@ AILinearRegressionLeastSquaresTest >> testPerformedIterationsIsInitialized [
 
 	self skip
 ]
+
+{ #category : #tests }
+AILinearRegressionLeastSquaresTest >> testWeightDerivativeforXCostDerivative [
+
+	self skip
+]
