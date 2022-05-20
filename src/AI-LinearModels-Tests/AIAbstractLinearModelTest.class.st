@@ -36,26 +36,6 @@ AIAbstractLinearModelTest >> testExactFitSingleVariable [
 ]
 
 { #category : #tests }
-AIAbstractLinearModelTest >> testFitEmptyInputMatrix [
-
-	| input output |
-	input := #(  ).
-	output := #( #( 1 ) ).
-	
-	self should: [ model fitX: input y: output ] raise: Error
-]
-
-{ #category : #tests }
-AIAbstractLinearModelTest >> testFitEmptyOutputValues [
-
-	| input output |
-	input := #( #( 5 ) #( 3 ) ).
-	output := #(  ).
-
-	self should: [ model fitX: input y: output ] raise: Error
-]
-
-{ #category : #tests }
 AIAbstractLinearModelTest >> testInconsistentFitOnDimension [
 
 	| input output |
