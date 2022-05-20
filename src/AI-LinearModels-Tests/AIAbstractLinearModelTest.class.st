@@ -76,20 +76,6 @@ AIAbstractLinearModelTest >> testInitializeWeightsToZeroOfSize [
 ]
 
 { #category : #tests }
-AIAbstractLinearModelTest >> testLearningRateIsInitialized [
-
-	self
-		assert: model learningRate 
-		equals: model class defaultLearningRate 
-]
-
-{ #category : #tests }
-AIAbstractLinearModelTest >> testMaxIterationsIsInitialized [
-
-	self assert: model maxIterations equals: model class defaultMaxIterations 
-]
-
-{ #category : #tests }
 AIAbstractLinearModelTest >> testPerformedIterationsIsInitialized [
 
 	self assert: model performedIterations equals: nil

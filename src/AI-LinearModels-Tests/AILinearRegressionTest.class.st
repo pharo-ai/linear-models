@@ -1,6 +1,9 @@
 Class {
 	#name : #AILinearRegressionTest,
 	#superclass : #AIAbstractLinearModelTest,
+	#instVars : [
+		'fixture'
+	],
 	#category : #'AI-LinearModels-Tests'
 }
 
@@ -8,18 +11,22 @@ Class {
 AILinearRegressionTest >> regression [
 
 	^ AILinearRegression new
+		learningRate: 0.1;
+		maxIterations: 3000;
+		yourself
+]
+
+{ #category : #running }
+AILinearRegressionTest >> setUp [
+
+	super setUp.
+
+	fixture := AILinearRegressionFixture new.
+	
 ]
 
 { #category : #tests }
 AILinearRegressionTest >> testBiasAlmostEqual [
-
-	| fixture |
-	fixture := AILinearRegressionFixture new.
-
-	model := AILinearRegression new
-		learningRate: 0.1;
-		maxIterations: 3000;
-		yourself.
 
 	model
 		fitX: fixture inputMatrix
@@ -59,10 +66,7 @@ AILinearRegressionTest >> testDivergingException [
 	
 	output := #( 4 234 523 523 5 63456346346346 636463 63463 0.253 0.84234 0.00042 243 4 2 2 5 2 5235235 0.0005 3 3 ).
 
-	model := AILinearRegression new
-		learningRate: 100;
-		maxIterations: 3000;
-		yourself.
+	model learningRate: 100.
 
 	self should: [model fitX: input y: output] raise: ModelStartingToDivergeException
 ]
@@ -98,14 +102,6 @@ AILinearRegressionTest >> testWeightDerivativeforXCostDerivative [
 
 { #category : #tests }
 AILinearRegressionTest >> testWeightsAlmostEqual [
-
-	| fixture |
-	fixture := AILinearRegressionFixture new.
-
-	model := AILinearRegression new
-		learningRate: 0.1;
-		maxIterations: 3000;
-		yourself.
 
 	model
 		fitX: fixture inputMatrix
