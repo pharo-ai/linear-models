@@ -24,3 +24,13 @@ SequenceableCollection >> averageForVector [
 	1 to: self size do: [ :i | sum := sum + (self at: i) ].
 	^ (sum / self size) asFloat
 ]
+
+{ #category : #'*AI-LinearModels' }
+SequenceableCollection >> closeTo: aCollection precision: aPrecision [
+
+	self with: aCollection do: [ :each :other |
+		(each closeTo: other precision: aPrecision)
+			ifFalse: [ ^ false ] ].
+		
+	^ true
+]
