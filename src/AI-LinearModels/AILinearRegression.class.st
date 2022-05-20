@@ -79,7 +79,7 @@ AILinearRegression >> costDerivative: predictedOutputVector actual: targetOutput
 	We return a vector instead of a number. That means that we should sum the elements of the vector
 	and divide by N in weight and bias derivative methods"
 
-	^ 2 * (predictedOutputVector - targetOutputVector)
+	^ (predictedOutputVector - targetOutputVector)
 ]
 
 { #category : #running }
@@ -93,7 +93,7 @@ AILinearRegression >> costFunctionX: inputMatrix y: actualValues [
 	predictedValues := self hypothesisFunction: inputMatrix.
 
 	squaredSum := (actualValues - predictedValues) collect: [ :each | each ** 2 ].
-	^ squaredSum average
+	^ squaredSum average / 2
 ]
 
 { #category : #running }

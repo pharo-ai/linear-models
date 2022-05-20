@@ -17,7 +17,7 @@ AILinearRegressionTest >> testBiasAlmostEqual [
 	fixture := AILinearRegressionFixture new.
 
 	model := AILinearRegression new
-		learningRate: 0.01;
+		learningRate: 0.1;
 		maxIterations: 3000;
 		yourself.
 
@@ -41,11 +41,11 @@ AILinearRegressionTest >> testCostDerivativeActual [
 
 	self
 		assert: (model costDerivative: #( 10 20 30 ) actual: #( 11 22 33 ))
-		equals: #(-2 -4 -6).
+		equals: #(-1 -2 -3).
 	
 	self
 		assert: (model costDerivative: #( 11 22 33 ) actual: #( 10 20 30 ))
-		equals: #(2 4 6)
+		equals: #(1 2 3)
 ]
 
 { #category : #tests }
@@ -80,7 +80,7 @@ AILinearRegressionTest >> testExactFitSingleVariable [
 	expectedOutput := #( 11 5 17 3 ).
 
 	model := AILinearRegression new
-		         learningRate: 0.01;
+		         learningRate: 0.1;
 		         maxIterations: 3000;
 		         yourself.
 
@@ -106,7 +106,7 @@ AILinearRegressionTest >> testWeightsAlmostEqual [
 	fixture := AILinearRegressionFixture new.
 
 	model := AILinearRegression new
-		learningRate: 0.01;
+		learningRate: 0.1;
 		maxIterations: 3000;
 		yourself.
 
