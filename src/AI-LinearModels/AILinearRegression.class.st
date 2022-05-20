@@ -41,9 +41,6 @@ output := #(-10.6 10.5 -13.6 27.7 -24.1 12.3 -2.6 -0.2 12.2 -22.1 -10.5 -24.3 2.
 Class {
 	#name : #AILinearRegression,
 	#superclass : #AIAbstractLinearModel,
-	#classInstVars : [
-		'Class'
-	],
 	#category : #'AI-LinearModels-Linear regression'
 }
 
