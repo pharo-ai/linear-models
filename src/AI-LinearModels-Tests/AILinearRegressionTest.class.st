@@ -74,16 +74,10 @@ AILinearRegressionTest >> testDivergingException [
 { #category : #tests }
 AILinearRegressionTest >> testExactFitSingleVariable [
 
-	| newInput expectedOutput actualOutput fixture |
-	fixture := AILinearRegressionFixture new.
+	| newInput expectedOutput actualOutput |
 
 	newInput := #( #( 4 ) #( 1 ) #( 7 ) #( 0 ) ).
 	expectedOutput := #( 11 5 17 3 ).
-
-	model := AILinearRegression new
-		learningRate: 0.01;
-		maxIterations: 3000;
-		yourself.
 
 	model fitX: fixture inputMatrix y: fixture outputVector.
 	actualOutput := model predict: newInput.
