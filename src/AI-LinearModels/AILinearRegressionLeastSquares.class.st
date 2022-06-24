@@ -18,21 +18,18 @@ AILinearRegressionLeastSquares >> bias [
 ]
 
 { #category : #api }
-AILinearRegressionLeastSquares >> fitX: inputMatrix y: outputVector [
+AILinearRegressionLeastSquares >> fitX: inputColumnMajorMatrix y: outputVector [
 
-	| xOffset yOffset centeredInputMatrix centeredOutputVector |
-	xOffset := inputMatrix averageForMatrix.
-	yOffset := outputVector averageForVector.
-
-	centeredInputMatrix := Array new: inputMatrix size.
-	1 to: inputMatrix size do: [ :index | 
-		centeredInputMatrix at: index put: (inputMatrix at: index) - xOffset ].
-
+	| xOffset yOffset centeredOutputVector |
+	yOffset := outputVector average.
+	xOffset := inputColumnMajorMatrix columnAverage.
+	inputColumnMajorMatrix -= xOffset.
 	centeredOutputVector := outputVector - yOffset.
 
 	weights := self
-		solveLeastSquaresInputMatrix: centeredInputMatrix
-		outputVector: centeredOutputVector.
+		           solveLeastSquaresInputMatrix: inputColumnMajorMatrix
+		           outputVector:
+		           (centeredOutputVector asAIMatrix: AIColumnMajorMatrix).
 
 	bias := yOffset - (xOffset * weights) sum
 ]
@@ -56,15 +53,16 @@ AILinearRegressionLeastSquares >> predict: inputMatrix [
 { #category : #training }
 AILinearRegressionLeastSquares >> solveLeastSquaresInputMatrix: aMatrix outputVector: aVector [
 
-	| leastSquares |
+	| leastSquares rowSize |
 	leastSquares := AILeastSquares new
-		matrixA: aMatrix asAIMatrix;
-		matrixB: aVector asAIMatrix;
+		matrixA: aMatrix;
+		matrixB: aVector;
 		yourself.
 	
 	leastSquares solve.
 	
-	^ leastSquares solution first: aMatrix first size.
+	rowSize := aMatrix numberOfColumns.
+	^ leastSquares solution contents first: rowSize.
 ]
 
 { #category : #running }
