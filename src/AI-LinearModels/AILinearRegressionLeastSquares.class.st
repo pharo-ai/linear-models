@@ -29,7 +29,7 @@ AILinearRegressionLeastSquares >> fitX: inputColumnMajorMatrix y: outputVector [
 	weights := self
 		           solveLeastSquaresInputMatrix: inputColumnMajorMatrix
 		           outputVector:
-		           (centeredOutputVector asAIMatrix: AIColumnMajorMatrix).
+		           (centeredOutputVector asAIMatrix: AIPharoFloatContiguousColumnMajorMatrix).
 
 	bias := yOffset - (xOffset * weights) sum
 ]
