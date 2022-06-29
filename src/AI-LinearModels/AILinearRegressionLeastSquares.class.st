@@ -62,7 +62,7 @@ AILinearRegressionLeastSquares >> solveLeastSquaresInputMatrix: aMatrix outputVe
 	leastSquares solve.
 	
 	rowSize := aMatrix numberOfColumns.
-	^ leastSquares solution contents first: rowSize.
+	^ (1 to: rowSize) collect: [ :i | leastSquares solution contents at: i ]
 ]
 
 { #category : #running }
