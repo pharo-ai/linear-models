@@ -27,9 +27,8 @@ AILinearRegressionLeastSquares >> fitX: inputColumnMajorMatrix y: outputVector [
 	centeredOutputVector := outputVector - yOffset.
 
 	weights := self
-		           solveLeastSquaresInputMatrix: inputColumnMajorMatrix
-		           outputVector:
-		           (centeredOutputVector asAIMatrix: AIColumnMajorMatrix).
+		solveLeastSquaresInputMatrix: inputColumnMajorMatrix
+		outputVector: (centeredOutputVector asAIMatrix: AIColumnMajorMatrix).
 
 	bias := yOffset - (xOffset * weights) sum
 ]
