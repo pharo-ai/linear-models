@@ -65,7 +65,9 @@ AILinearRegressionTrivialTest >> testExpectedWeightsAtFirstIteration [
 
 	model updateWeightsForX: fixture inputMatrix y: fixture outputVector.
 	
-	self assert: model weights closeTo: fixture expectedWeightsAtFirstIteration
+	model weights
+		with: fixture expectedWeightsAtFirstIteration
+		do: [ :real : expected | self assert: real closeTo: expected ]
 ]
 
 { #category : #tests }

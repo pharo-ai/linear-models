@@ -74,18 +74,13 @@ AILinearRegressionTest >> testDivergingException [
 { #category : #tests }
 AILinearRegressionTest >> testExactFitSingleVariable [
 
-	| function input output newInput expectedOutput actualOutput |
-	function := [ :x | 2 * x + 3 ].
-
-	input := #( #( 2 ) #( 3 ) #( 1 ) #( 5 ) #( 2 ) #( 6 ) ).
-	output := input collect: [ :x | function value: x first ].
+	| newInput expectedOutput actualOutput |
 
 	newInput := #( #( 4 ) #( 1 ) #( 7 ) #( 0 ) ).
 	expectedOutput := #( 11 5 17 3 ).
 
-	model fitX: input y: output.
+	model fitX: fixture inputMatrix y: fixture outputVector.
 	actualOutput := model predict: newInput.
-	
 	actualOutput
 		with: expectedOutput
 		do: [ :actual :expected | self assert: actual closeTo: expected ]
