@@ -1,5 +1,5 @@
 "
-Linear regression implementation using least squares from LAPACK
+Linear regression implementation solving the least squares problem using Pharo-LAPACK
 "
 Class {
 	#name : #AILinearRegressionLeastSquares,
