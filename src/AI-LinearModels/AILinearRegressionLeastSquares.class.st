@@ -21,6 +21,7 @@ AILinearRegressionLeastSquares >> bias [
 AILinearRegressionLeastSquares >> fitX: inputColumnMajorMatrix y: outputVector [
 
 	| xOffset yOffset centeredOutputVector |
+	"yOffset := outputVector columnAverage first."
 	yOffset := outputVector average.
 	xOffset := inputColumnMajorMatrix columnAverage.
 	inputColumnMajorMatrix -= xOffset.
