@@ -7,6 +7,10 @@ SmalltalkCISpec {
     }
   ],
   #testing : {
+     #exclude : {
+      #classes : [ #AILinearRegressionLeastSquaresTest ]
+    },
+    
     #coverage : {
       #packages : [ 'AI-LinearModels*' ]
     }
