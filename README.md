@@ -8,7 +8,7 @@
 
 For more information please refer to the pharo-ai wiki: https://github.com/pharo-ai/wiki
 
-This is a library that implements two of the most-know linear models: Linear and Logistic regression.
+This is a library that implements two of the most-know linear models: Linear and Logistic regression. 
 
 ## How to install it
 
