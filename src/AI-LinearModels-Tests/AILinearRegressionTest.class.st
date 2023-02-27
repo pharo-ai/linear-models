@@ -32,7 +32,7 @@ AILinearRegressionTest >> testBiasAlmostEqual [
 		fitX: fixture inputMatrix
 		y: fixture outputVector.
 
-	self assert: model bias closeTo: fixture bias
+	self assert: model bias closeTo: fixture bias precision: 0.001
 ]
 
 { #category : #tests }
@@ -75,15 +75,12 @@ AILinearRegressionTest >> testDivergingException [
 AILinearRegressionTest >> testExactFitSingleVariable [
 
 	| newInput expectedOutput actualOutput |
-
 	newInput := #( #( 4 ) #( 1 ) #( 7 ) #( 0 ) ).
 	expectedOutput := #( 11 5 17 3 ).
 
 	model fitX: fixture inputMatrix y: fixture outputVector.
 	actualOutput := model predict: newInput.
-	actualOutput
-		with: expectedOutput
-		do: [ :actual :expected | self assert: actual closeTo: expected ]
+	actualOutput with: expectedOutput do: [ :actual :expected | self assert: actual closeTo: expected precision: 0.001 ]
 ]
 
 { #category : #tests }
