@@ -1,1 +1,1 @@
-Package { #name : #'AI-LinearModels' }
+Package { #name : 'AI-LinearModels' }

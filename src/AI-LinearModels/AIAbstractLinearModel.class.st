@@ -6,8 +6,8 @@ y = W*X + b
 where both W and X are vectors that can have any size (multidimensional lines).
 "
 Class {
-	#name : #AIAbstractLinearModel,
-	#superclass : #Object,
+	#name : 'AIAbstractLinearModel',
+	#superclass : 'Object',
 	#instVars : [
 		'bias',
 		'maxIterations',
@@ -16,28 +16,30 @@ Class {
 		'costHistory',
 		'performedIterations'
 	],
-	#category : #'AI-LinearModels-Core'
+	#category : 'AI-LinearModels-Core',
+	#package : 'AI-LinearModels',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIAbstractLinearModel class >> defaultLearningRate [
 
 	^ 0.01
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIAbstractLinearModel class >> defaultMaxIterations [
 
 	^ 5000
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AIAbstractLinearModel class >> learningRate: aNumber [
 
 	^ self new learningRate: aNumber
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AIAbstractLinearModel class >> learningRate: aNumber maxIterations: maxIterations [
 
 	^ self new
@@ -45,41 +47,41 @@ AIAbstractLinearModel class >> learningRate: aNumber maxIterations: maxIteration
 		maxIterations: maxIterations
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIAbstractLinearModel >> bias [
 
 	^ bias
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIAbstractLinearModel >> bias: anInteger [ 
 	bias := anInteger
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AIAbstractLinearModel >> biasDerivative: arg1 [ 
 	^ self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AIAbstractLinearModel >> costDerivative: inputMatrix actual: actualValues [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AIAbstractLinearModel >> costFunctionX: inputMatrix y: actualValues [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIAbstractLinearModel >> costHistory [
 
 	^ costHistory
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 AIAbstractLinearModel >> fitX: inputMatrix y: actualValues [
 
 	
@@ -97,7 +99,7 @@ AIAbstractLinearModel >> fitX: inputMatrix y: actualValues [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AIAbstractLinearModel >> hasConverged [
 
 	| precision difference |
@@ -115,12 +117,12 @@ AIAbstractLinearModel >> hasConverged [
 		  difference closeTo: 0 precision: precision ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AIAbstractLinearModel >> hypothesisFunction: inputMatrix [ 
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AIAbstractLinearModel >> initialize [
 
 	super initialize.
@@ -128,7 +130,7 @@ AIAbstractLinearModel >> initialize [
 	maxIterations := self class defaultMaxIterations
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AIAbstractLinearModel >> initializeRandomWeightsOfSize: aNumber [
 
 	| rand |
@@ -138,56 +140,56 @@ AIAbstractLinearModel >> initializeRandomWeightsOfSize: aNumber [
 	weights := (1 to: aNumber) collect: [ :i | rand next ].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AIAbstractLinearModel >> initializeWeightsOfSize: aNumber [
 
 	self initializeRandomWeightsOfSize: aNumber
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AIAbstractLinearModel >> initializeWeightsToZeroOfSize: aNumber [
 
 	bias := 0.
 	weights := (1 to: aNumber) collect: [ :each | 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIAbstractLinearModel >> learningRate [
 
 	^ learningRate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIAbstractLinearModel >> learningRate: anObject [
 
 	learningRate := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIAbstractLinearModel >> maxIterations [
 
 	^ maxIterations
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIAbstractLinearModel >> maxIterations: anObject [
 
 	maxIterations := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIAbstractLinearModel >> performedIterations [
 
 	^ performedIterations
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 AIAbstractLinearModel >> predict: inputMatrix [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AIAbstractLinearModel >> updateWeightsForX: inputMatrix y: actualValues [
 
 	| weightDerivative biasDerivative predictedOutputVector costDerivative |
@@ -203,12 +205,12 @@ AIAbstractLinearModel >> updateWeightsForX: inputMatrix y: actualValues [
 	bias := bias - (learningRate * biasDerivative)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AIAbstractLinearModel >> weightDerivativeforX: arg1 costDerivative: arg2 [ 
 	^ self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AIAbstractLinearModel >> weightedSumOf: inputMatrix [
 
 	"z = Xw + b"
@@ -221,13 +223,13 @@ AIAbstractLinearModel >> weightedSumOf: inputMatrix [
 		(row * weights) sum + bias ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIAbstractLinearModel >> weights [
 
 	^ weights
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIAbstractLinearModel >> weights: aCollection [ 
 	weights := aCollection
 ]

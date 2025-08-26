@@ -39,12 +39,14 @@ output := #(-10.6 10.5 -13.6 27.7 -24.1 12.3 -2.6 -0.2 12.2 -22.1 -10.5 -24.3 2.
 ```
 "
 Class {
-	#name : #AILinearRegression,
-	#superclass : #AIAbstractLinearModel,
-	#category : #'AI-LinearModels-Linear regression'
+	#name : 'AILinearRegression',
+	#superclass : 'AIAbstractLinearModel',
+	#category : 'AI-LinearModels-Linear regression',
+	#package : 'AI-LinearModels',
+	#tag : 'Linear regression'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 AILinearRegression >> biasDerivative: costDerivative [
 
 
@@ -60,7 +62,7 @@ AILinearRegression >> biasDerivative: costDerivative [
 	^ costDerivative average
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AILinearRegression >> costDerivative: predictedOutputVector actual: targetOutputVector [
 
 	"We are using the mean squared error function to minimize the errors."
@@ -82,7 +84,7 @@ AILinearRegression >> costDerivative: predictedOutputVector actual: targetOutput
 	^ (predictedOutputVector - targetOutputVector)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AILinearRegression >> costFunctionX: inputMatrix y: actualValues [
 
 	"The cost function for the linear regression is the mean squared error function"
@@ -93,10 +95,10 @@ AILinearRegression >> costFunctionX: inputMatrix y: actualValues [
 	predictedValues := self hypothesisFunction: inputMatrix.
 
 	squaredSum := (actualValues - predictedValues) collect: [ :each | each ** 2 ].
-	^ squaredSum average / 2
+	^ squaredSum average
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AILinearRegression >> hypothesisFunction: inputMatrix [
 
 	"The hypothesis function for the linear regression is the line equation. It can be a multidimensional line."
@@ -106,13 +108,13 @@ AILinearRegression >> hypothesisFunction: inputMatrix [
 	^ self weightedSumOf: inputMatrix
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 AILinearRegression >> predict: inputMatrix [
 
 	^ self hypothesisFunction: inputMatrix
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AILinearRegression >> weightDerivativeforX: inputMatrix costDerivative: costDerivativeVector [
 
 	"J(w) = (1/n) * Σ (yi - h(z))^2"
