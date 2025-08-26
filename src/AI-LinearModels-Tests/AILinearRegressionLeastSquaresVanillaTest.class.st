@@ -1,28 +1,29 @@
 Class {
-	#name : #AILinearRegressionLeastSquaresVanillaTest,
-	#superclass : #AILinearRegressionLeastSquaresTest,
-	#category : #'AI-LinearModels-Tests'
+	#name : 'AILinearRegressionLeastSquaresVanillaTest',
+	#superclass : 'AILinearRegressionLeastSquaresTest',
+	#category : 'AI-LinearModels-Tests',
+	#package : 'AI-LinearModels-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 AILinearRegressionLeastSquaresVanillaTest >> regression [
 
 	^ AILinearRegressionLeastSquaresVanilla new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AILinearRegressionLeastSquaresVanillaTest >> testBiasDerivative [
 
 	self skip
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AILinearRegressionLeastSquaresVanillaTest >> testCostDerivativeActual [
 
 	self skip
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AILinearRegressionLeastSquaresVanillaTest >> testWeightedSumOf [
 
 	self skip

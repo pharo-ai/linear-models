@@ -1,13 +1,14 @@
 Class {
-	#name : #AILinearRegressionTest,
-	#superclass : #AIAbstractLinearModelTest,
+	#name : 'AILinearRegressionTest',
+	#superclass : 'AIAbstractLinearModelTest',
 	#instVars : [
 		'fixture'
 	],
-	#category : #'AI-LinearModels-Tests'
+	#category : 'AI-LinearModels-Tests',
+	#package : 'AI-LinearModels-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 AILinearRegressionTest >> regression [
 
 	^ AILinearRegression new
@@ -16,7 +17,7 @@ AILinearRegressionTest >> regression [
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AILinearRegressionTest >> setUp [
 
 	super setUp.
@@ -25,7 +26,7 @@ AILinearRegressionTest >> setUp [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AILinearRegressionTest >> testBiasAlmostEqual [
 
 	model
@@ -35,7 +36,7 @@ AILinearRegressionTest >> testBiasAlmostEqual [
 	self assert: model bias closeTo: fixture bias precision: 0.001
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AILinearRegressionTest >> testBiasDerivative [
 
 	self
@@ -43,7 +44,7 @@ AILinearRegressionTest >> testBiasDerivative [
 		equals: 4.5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AILinearRegressionTest >> testCostDerivativeActual [
 
 	self
@@ -55,7 +56,7 @@ AILinearRegressionTest >> testCostDerivativeActual [
 		equals: #(1 2 3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AILinearRegressionTest >> testDivergingException [
 
 	"Training the model with non-sense, completely unproportioned data and with a very high learning rate to raise the diverging exception."
@@ -71,7 +72,7 @@ AILinearRegressionTest >> testDivergingException [
 	self should: [model fitX: input y: output] raise: ModelStartingToDivergeException
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AILinearRegressionTest >> testExactFitSingleVariable [
 
 	| newInput expectedOutput actualOutput |
@@ -83,7 +84,7 @@ AILinearRegressionTest >> testExactFitSingleVariable [
 	actualOutput with: expectedOutput do: [ :actual :expected | self assert: actual closeTo: expected precision: 0.001 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AILinearRegressionTest >> testWeightDerivativeforXCostDerivative [
 	
 	self
@@ -91,7 +92,7 @@ AILinearRegressionTest >> testWeightDerivativeforXCostDerivative [
 		equals: #( 37.5 45 52.5 )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AILinearRegressionTest >> testWeightsAlmostEqual [
 
 	model
