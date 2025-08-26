@@ -9,6 +9,23 @@ Class {
 	#tag : 'Linear regression'
 }
 
+{ #category : 'api' }
+AILinearRegressionLeastSquaresVanilla >> fitX: inputMatrix y: outputVector [
+
+	| xOffset yOffset centeredInputMatrix centeredOutputVector |
+	"yOffset := outputVector columnAverage first."
+	yOffset := outputVector average.
+	xOffset := inputMatrix average.
+	centeredInputMatrix := inputMatrix collect: [ :col | col - xOffset].
+	centeredOutputVector := outputVector - yOffset.
+
+	weights := self
+		solveLeastSquaresInputMatrix: centeredInputMatrix
+		outputVector: centeredOutputVector.
+
+	bias := yOffset - (xOffset * weights) sum
+]
+
 { #category : 'training' }
 AILinearRegressionLeastSquaresVanilla >> solveLeastSquaresInputMatrix: aMatrix outputVector: aVector [
 
