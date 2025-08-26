@@ -78,12 +78,12 @@ AILinearRegressionLeastSquares >> weightedSumOf: inputMatrix [
 	Then we return a vector of the same size of the original inputMatrix."
 
 	| weightedSum |
-	weightedSum := Array new: inputMatrix size.
+	weightedSum := OrderedCollection new: inputMatrix size.
 	1 to: inputMatrix size do: [ :index | 
 		| sum row |
 		row := (inputMatrix at: index).
 		sum := (row * weights) sum + bias.
-		weightedSum at: index add: sum ].
+		weightedSum add: sum ].
 
 	^ weightedSum
 ]
