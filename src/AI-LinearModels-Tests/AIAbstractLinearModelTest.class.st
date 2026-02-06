@@ -1,41 +1,42 @@
 Class {
-	#name : #AIAbstractLinearModelTest,
-	#superclass : #TestCase,
+	#name : 'AIAbstractLinearModelTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'model'
 	],
-	#category : #'AI-LinearModels-Tests'
+	#category : 'AI-LinearModels-Tests',
+	#package : 'AI-LinearModels-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AIAbstractLinearModelTest class >> isAbstract [ 
 ^self == AIAbstractLinearModelTest 
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AIAbstractLinearModelTest >> regression [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AIAbstractLinearModelTest >> setUp [
 
 	super setUp.
 	model := self regression
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AIAbstractLinearModelTest >> testDivergingException [
 	^ self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AIAbstractLinearModelTest >> testExactFitSingleVariable [
 	^ self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AIAbstractLinearModelTest >> testInconsistentFitOnDimension [
 
 	| input output |
@@ -45,7 +46,7 @@ AIAbstractLinearModelTest >> testInconsistentFitOnDimension [
 	self should: [ model fitX: input y: output ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AIAbstractLinearModelTest >> testInitializeWeightsToZeroOfSize [
 
 	| expectedInitWeigths |
@@ -55,13 +56,13 @@ AIAbstractLinearModelTest >> testInitializeWeightsToZeroOfSize [
 	self assert: model weights equals: expectedInitWeigths   
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AIAbstractLinearModelTest >> testPerformedIterationsIsInitialized [
 
 	self assert: model performedIterations equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AIAbstractLinearModelTest >> testPredictionWithNonFittedModel [
 
 	| input output |
@@ -70,7 +71,7 @@ AIAbstractLinearModelTest >> testPredictionWithNonFittedModel [
 	self should: [ output := model predict: input ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AIAbstractLinearModelTest >> testWeightedSumOf [
 
 	model bias: 2.

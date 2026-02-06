@@ -2,8 +2,8 @@
 This is a simple and trivial fixture that we did to compute things manually
 "
 Class {
-	#name : #AILinearRegressionTrivialFixture,
-	#superclass : #Object,
+	#name : 'AILinearRegressionTrivialFixture',
+	#superclass : 'Object',
 	#instVars : [
 		'initialBias',
 		'initialWeights',
@@ -17,58 +17,59 @@ Class {
 		'expectedBiasAtFirstIteration',
 		'expectedPredictionBeforeLearning'
 	],
-	#category : #'AI-LinearModels-Tests'
+	#category : 'AI-LinearModels-Tests',
+	#package : 'AI-LinearModels-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AILinearRegressionTrivialFixture >> expectedBiasAtFirstIteration [
 
 	^ expectedBiasAtFirstIteration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AILinearRegressionTrivialFixture >> expectedBiasDerivativeAtFirstIteration [
 
 	^ expectedBiasDerivativeAtFirstIteration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AILinearRegressionTrivialFixture >> expectedCostBeforeLearning [
 
 	^ expectedCostBeforeLearning
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AILinearRegressionTrivialFixture >> expectedPredictionBeforeLearning [
 
 	^ expectedPredictionBeforeLearning
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AILinearRegressionTrivialFixture >> expectedWeightDerivativeAtFirstIterarion [
 
 	^ expectedWeightDerivativeAtFirstIterarion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AILinearRegressionTrivialFixture >> expectedWeightsAtFirstIteration [
 
 	^ expectedWeightsAtFirstIteration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AILinearRegressionTrivialFixture >> initialBias [
 
 	^ initialBias
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AILinearRegressionTrivialFixture >> initialWeights [
 
 	^ initialWeights
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AILinearRegressionTrivialFixture >> initialize [
 
 	super initialize.
@@ -87,19 +88,19 @@ AILinearRegressionTrivialFixture >> initialize [
 	expectedBiasAtFirstIteration := 1/15
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AILinearRegressionTrivialFixture >> inputMatrix [
 
 	^ inputMatrix
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AILinearRegressionTrivialFixture >> learningRate [
 
 	^ learningRate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AILinearRegressionTrivialFixture >> outputVector [
 
 	^ outputVector

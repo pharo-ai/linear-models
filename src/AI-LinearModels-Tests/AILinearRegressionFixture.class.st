@@ -3,24 +3,25 @@ I am a fixture with a small and simple example for linear regression.
 I provide input matrix X and expected output vector y.
 "
 Class {
-	#name : #AILinearRegressionFixture,
-	#superclass : #Object,
+	#name : 'AILinearRegressionFixture',
+	#superclass : 'Object',
 	#instVars : [
 		'bias',
 		'inputMatrix',
 		'outputVector',
 		'weights'
 	],
-	#category : #'AI-LinearModels-Tests'
+	#category : 'AI-LinearModels-Tests',
+	#package : 'AI-LinearModels-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AILinearRegressionFixture >> bias [
 
 	^ bias
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AILinearRegressionFixture >> initialize [
 
 	| function |
@@ -36,19 +37,19 @@ AILinearRegressionFixture >> initialize [
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AILinearRegressionFixture >> inputMatrix [
 
 	^ inputMatrix
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AILinearRegressionFixture >> outputVector [
 
 	^ outputVector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AILinearRegressionFixture >> weights [
 
 	^ weights
