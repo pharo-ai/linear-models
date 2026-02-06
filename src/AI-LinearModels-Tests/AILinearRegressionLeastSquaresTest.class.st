@@ -1,40 +1,41 @@
 Class {
-	#name : #AILinearRegressionLeastSquaresTest,
-	#superclass : #AILinearRegressionTest,
-	#category : #'AI-LinearModels-Tests'
+	#name : 'AILinearRegressionLeastSquaresTest',
+	#superclass : 'AILinearRegressionTest',
+	#category : 'AI-LinearModels-Tests',
+	#package : 'AI-LinearModels-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 AILinearRegressionLeastSquaresTest >> regression [
 
 	^ AILinearRegressionLeastSquares new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AILinearRegressionLeastSquaresTest >> testInitializeWeightsToZeroOfSize [
 
 	self skip
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AILinearRegressionLeastSquaresTest >> testLearningRateIsInitialized [
 
 	self skip
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AILinearRegressionLeastSquaresTest >> testMaxIterationsIsInitialized [
 
 	self skip
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AILinearRegressionLeastSquaresTest >> testPerformedIterationsIsInitialized [
 
 	self skip
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AILinearRegressionLeastSquaresTest >> testWeightDerivativeforXCostDerivative [
 
 	self skip

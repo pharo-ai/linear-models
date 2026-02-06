@@ -2,24 +2,25 @@
 An AILogisticRegressionTest is a test class for testing the behavior of AILogisticRegression
 "
 Class {
-	#name : #AILogisticRegressionTest,
-	#superclass : #AIAbstractLinearModelTest,
-	#category : #'AI-LinearModels-Tests'
+	#name : 'AILogisticRegressionTest',
+	#superclass : 'AIAbstractLinearModelTest',
+	#category : 'AI-LinearModels-Tests',
+	#package : 'AI-LinearModels-Tests'
 }
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 AILogisticRegressionTest >> generateRandomNumber: random between: lowerBound and: higherBound [
 
 	^ lowerBound + (random next * (higherBound - lowerBound))
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AILogisticRegressionTest >> regression [
 
 	^AILogisticRegression new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AILogisticRegressionTest >> testDivergingException [
 
 	"Training the model with non-sense, completely unproportioned data and with a very high learning rate to raise the diverging exception."
@@ -38,7 +39,7 @@ AILogisticRegressionTest >> testDivergingException [
 	self should: [model fitX: input y: output] raise: ModelStartingToDivergeException
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AILogisticRegressionTest >> testExactFitSingleVariable [
 
 	| output newInput expectedOutput actualOutput inputPositive inputNegative input |
@@ -72,7 +73,7 @@ AILogisticRegressionTest >> testExactFitSingleVariable [
 		do: [ :actual :expected | self assert: actual equals: expected ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AILogisticRegressionTest >> testPredictProbabilities [
 
 	| output newInput expectedOutput actualOutput inputPositive inputNegative input actualOutputPositive actualOutputNegative |
