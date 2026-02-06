@@ -6,16 +6,25 @@ env:
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the development branch
 on:
+  # Run on push and pull requests on any branch, but ignore if change doesn't affect code.
   push:
-    branches:
-      - master
+    paths-ignore:
+    - 'README.md'
+    - 'docs/**'
+  pull_request:
+    paths-ignore:
+    - 'README.md'
+    - 'docs/**'
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
 
 jobs:
   build:
     strategy:
       matrix:
         os: [ macos-latest, windows-latest, ubuntu-latest]
-        smalltalk: [ Pharo64-9.0, Pharo64-10, Pharo64-11, Pharo64-12 ]
+        smalltalk: [ Pharo64-9.0, Pharo64-10, Pharo64-11, Pharo64-12, Pharo64-13, Pharo64-14 ]
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.smalltalk }}
     steps:
