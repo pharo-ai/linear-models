@@ -35,7 +35,7 @@ AILinearRegressionLeastSquares >> fitX: inputMatrix y: outputVector [
 	inputMatrix -= xOffset.
 	centeredOutputVector := outputVector - yOffset.
 
-	weights := self solveLeastSquaresInputMatrix: inputMatrix outputVector: (centeredOutputVector asAIMatrix: AIColumnMajorMatrix).
+	weights := self solveLeastSquaresInputMatrix: inputMatrix outputVector: centeredOutputVector.
 
 	bias := yOffset - (xOffset * weights) sum
 ]
@@ -59,10 +59,11 @@ AILinearRegressionLeastSquares >> predict: inputMatrix [
 { #category : 'training' }
 AILinearRegressionLeastSquares >> solveLeastSquaresInputMatrix: aMatrix outputVector: aVector [
 
-	| leastSquares rowSize |
+	| leastSquares rowSize convertedOutput |
+	convertedOutput := aVector asAIColumnMajorMatrix.
 	leastSquares := AILeastSquares new
 		matrixA: aMatrix;
-		matrixB: aVector;
+		matrixB: convertedOutput;
 		yourself.
 	
 	leastSquares solve.
