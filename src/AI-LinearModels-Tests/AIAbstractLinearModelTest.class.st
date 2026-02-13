@@ -2,15 +2,35 @@ Class {
 	#name : 'AIAbstractLinearModelTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'model'
+		'model',
+		'fixture'
 	],
 	#category : 'AI-LinearModels-Tests',
 	#package : 'AI-LinearModels-Tests'
 }
 
 { #category : 'testing' }
-AIAbstractLinearModelTest class >> isAbstract [ 
-^self == AIAbstractLinearModelTest 
+AIAbstractLinearModelTest class >> isAbstract [
+
+	^ self == AIAbstractLinearModelTest
+]
+
+{ #category : 'testing' }
+AIAbstractLinearModelTest class >> shouldInheritSelectors [
+
+	^ true
+]
+
+{ #category : 'running' }
+AIAbstractLinearModelTest >> fixtureInput [
+
+	^ fixture inputMatrix
+]
+
+{ #category : 'running' }
+AIAbstractLinearModelTest >> fixtureOutput [
+
+	^ fixture outputVector
 ]
 
 { #category : 'running' }
@@ -23,17 +43,8 @@ AIAbstractLinearModelTest >> regression [
 AIAbstractLinearModelTest >> setUp [
 
 	super setUp.
-	model := self regression
-]
-
-{ #category : 'tests' }
-AIAbstractLinearModelTest >> testDivergingException [
-	^ self subclassResponsibility
-]
-
-{ #category : 'tests' }
-AIAbstractLinearModelTest >> testExactFitSingleVariable [
-	^ self subclassResponsibility
+	model := self regression.
+	fixture := AILinearRegressionFixture new
 ]
 
 { #category : 'tests' }
@@ -44,22 +55,6 @@ AIAbstractLinearModelTest >> testInconsistentFitOnDimension [
 	output := #( #( 1 ) ).
 
 	self should: [ model fitX: input y: output ] raise: Error
-]
-
-{ #category : 'tests' }
-AIAbstractLinearModelTest >> testInitializeWeightsToZeroOfSize [
-
-	| expectedInitWeigths |
-	expectedInitWeigths := #(0 0 0).
-	model initializeWeightsToZeroOfSize: 3.
-	
-	self assert: model weights equals: expectedInitWeigths   
-]
-
-{ #category : 'tests' }
-AIAbstractLinearModelTest >> testPerformedIterationsIsInitialized [
-
-	self assert: model performedIterations equals: nil
 ]
 
 { #category : 'tests' }

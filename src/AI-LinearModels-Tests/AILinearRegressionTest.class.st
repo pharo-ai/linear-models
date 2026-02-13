@@ -1,9 +1,6 @@
 Class {
 	#name : 'AILinearRegressionTest',
-	#superclass : 'AIAbstractLinearModelTest',
-	#instVars : [
-		'fixture'
-	],
+	#superclass : 'AILinearRegressionGradientDescentTest',
 	#category : 'AI-LinearModels-Tests',
 	#package : 'AI-LinearModels-Tests'
 }
@@ -17,21 +14,10 @@ AILinearRegressionTest >> regression [
 		yourself
 ]
 
-{ #category : 'running' }
-AILinearRegressionTest >> setUp [
-
-	super setUp.
-
-	fixture := AILinearRegressionFixture new.
-	
-]
-
 { #category : 'tests' }
 AILinearRegressionTest >> testBiasAlmostEqual [
 
-	model
-		fitX: fixture inputMatrix
-		y: fixture outputVector.
+	model fitX: self fixtureInput y: self fixtureOutput.
 
 	self assert: model bias closeTo: fixture bias precision: 0.001
 ]
@@ -57,30 +43,15 @@ AILinearRegressionTest >> testCostDerivativeActual [
 ]
 
 { #category : 'tests' }
-AILinearRegressionTest >> testDivergingException [
-
-	"Training the model with non-sense, completely unproportioned data and with a very high learning rate to raise the diverging exception."
-
-	|input output |
-
-	input := #( #( 13421525235235235235 ) #( 3 ) #( 0.1 ) #( 0.000005 ) #( 241241241124124124 ) #( 6412412412414 ) #(45345) #(5) #(53) #(5) #(3) #(1) #(2) #(1) #(0.09) #(0.4) #(0.0009) #(5) #(234242342423423) #(0.9888) #(0.0000009) ).
-	
-	output := #( 4 234 523 523 5 63456346346346 636463 63463 0.253 0.84234 0.00042 243 4 2 2 5 2 5235235 0.0005 3 3 ).
-
-	model learningRate: 100.
-
-	self should: [model fitX: input y: output] raise: ModelStartingToDivergeException
-]
-
-{ #category : 'tests' }
 AILinearRegressionTest >> testExactFitSingleVariable [
 
 	| newInput expectedOutput actualOutput |
 	newInput := #( #( 4 ) #( 1 ) #( 7 ) #( 0 ) ).
 	expectedOutput := #( 11 5 17 3 ).
 
-	model fitX: fixture inputMatrix y: fixture outputVector.
+	model fitX: self fixtureInput y: self fixtureOutput.
 	actualOutput := model predict: newInput.
+
 	actualOutput with: expectedOutput do: [ :actual :expected | self assert: actual closeTo: expected precision: 0.001 ]
 ]
 
@@ -95,9 +66,7 @@ AILinearRegressionTest >> testWeightDerivativeforXCostDerivative [
 { #category : 'tests' }
 AILinearRegressionTest >> testWeightsAlmostEqual [
 
-	model
-		fitX: fixture inputMatrix
-		y: fixture outputVector.
+	model fitX: self fixtureInput y: self fixtureOutput.
 
 	fixture weights with: model weights do: [ :expected :actual |
 		self assert: actual closeTo: expected precision: 0.0001 ]

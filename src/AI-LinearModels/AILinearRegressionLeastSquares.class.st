@@ -2,39 +2,45 @@
 Linear regression implementation solving the least squares problem using Pharo-LAPACK
 "
 Class {
-	#name : #AILinearRegressionLeastSquares,
-	#superclass : #Object,
+	#name : 'AILinearRegressionLeastSquares',
+	#superclass : 'Object',
 	#instVars : [
 		'weights',
 		'bias'
 	],
-	#category : #'AI-LinearModels-Linear regression'
+	#category : 'AI-LinearModels-Linear regression',
+	#package : 'AI-LinearModels',
+	#tag : 'Linear regression'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AILinearRegressionLeastSquares >> bias [
 
 	^ bias
 ]
 
-{ #category : #api }
-AILinearRegressionLeastSquares >> fitX: inputColumnMajorMatrix y: outputVector [
+{ #category : 'accessing' }
+AILinearRegressionLeastSquares >> bias: anInteger [
+
+	bias := anInteger
+]
+
+{ #category : 'api' }
+AILinearRegressionLeastSquares >> fitX: inputMatrix y: outputVector [
 
 	| xOffset yOffset centeredOutputVector |
 	"yOffset := outputVector columnAverage first."
 	yOffset := outputVector average.
-	xOffset := inputColumnMajorMatrix columnAverage.
-	inputColumnMajorMatrix -= xOffset.
+	xOffset := inputMatrix columnAverage.
+	inputMatrix -= xOffset.
 	centeredOutputVector := outputVector - yOffset.
 
-	weights := self
-		solveLeastSquaresInputMatrix: inputColumnMajorMatrix
-		outputVector: (centeredOutputVector asAIMatrix: AIColumnMajorMatrix).
+	weights := self solveLeastSquaresInputMatrix: inputMatrix outputVector: centeredOutputVector.
 
 	bias := yOffset - (xOffset * weights) sum
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AILinearRegressionLeastSquares >> hypothesisFunction: inputMatrix [
 
 	"The hypothesis function for the linear regression is the line equation. It can be a multidimensional line."
@@ -44,19 +50,20 @@ AILinearRegressionLeastSquares >> hypothesisFunction: inputMatrix [
 	^ self weightedSumOf: inputMatrix
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 AILinearRegressionLeastSquares >> predict: inputMatrix [
 
 	^ self hypothesisFunction: inputMatrix
 ]
 
-{ #category : #training }
+{ #category : 'training' }
 AILinearRegressionLeastSquares >> solveLeastSquaresInputMatrix: aMatrix outputVector: aVector [
 
-	| leastSquares rowSize |
+	| leastSquares rowSize convertedOutput |
+	convertedOutput := aVector asAIColumnMajorMatrix.
 	leastSquares := AILeastSquares new
 		matrixA: aMatrix;
-		matrixB: aVector;
+		matrixB: convertedOutput;
 		yourself.
 	
 	leastSquares solve.
@@ -65,7 +72,7 @@ AILinearRegressionLeastSquares >> solveLeastSquaresInputMatrix: aMatrix outputVe
 	^ (1 to: rowSize) collect: [ :i | leastSquares solution contents at: i ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AILinearRegressionLeastSquares >> weightedSumOf: inputMatrix [
 
 	"z = Xw + b"
@@ -81,13 +88,19 @@ AILinearRegressionLeastSquares >> weightedSumOf: inputMatrix [
 		| sum row |
 		row := (inputMatrix at: index).
 		sum := (row * weights) sum + bias.
-		weightedSum at: index add: sum ].
+		weightedSum at: index put: sum ].
 
 	^ weightedSum
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AILinearRegressionLeastSquares >> weights [
 
 	^ weights
+]
+
+{ #category : 'accessing' }
+AILinearRegressionLeastSquares >> weights: aCollection [
+
+	weights := aCollection
 ]
