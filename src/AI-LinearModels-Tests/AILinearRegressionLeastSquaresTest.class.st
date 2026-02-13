@@ -1,9 +1,21 @@
 Class {
 	#name : 'AILinearRegressionLeastSquaresTest',
-	#superclass : 'AILinearRegressionTest',
+	#superclass : 'AIAbstractLinearModelTest',
 	#category : 'AI-LinearModels-Tests',
 	#package : 'AI-LinearModels-Tests'
 }
+
+{ #category : 'running' }
+AILinearRegressionLeastSquaresTest >> fixtureInput [
+
+	^ self inputType rows: fixture inputMatrix 
+]
+
+{ #category : 'running' }
+AILinearRegressionLeastSquaresTest >> inputType [
+
+	^ AIColumnMajorMatrix 
+]
 
 { #category : 'running' }
 AILinearRegressionLeastSquaresTest >> regression [
@@ -12,31 +24,27 @@ AILinearRegressionLeastSquaresTest >> regression [
 ]
 
 { #category : 'tests' }
-AILinearRegressionLeastSquaresTest >> testInitializeWeightsToZeroOfSize [
+AILinearRegressionLeastSquaresTest >> testExactFitSingleVariable [
 
-	self skip
+	| newInput expectedOutput actualOutput |
+	newInput := #( #( 4 ) #( 1 ) #( 7 ) #( 0 ) ).
+	expectedOutput := #( 11 5 17 3 ).
+
+	model fitX: self fixtureInput y: self fixtureOutput.
+	actualOutput := model predict: newInput.
+
+	actualOutput with: expectedOutput do: [ :actual :expected | self assert: actual closeTo: expected precision: 0.001 ]
 ]
 
 { #category : 'tests' }
-AILinearRegressionLeastSquaresTest >> testLearningRateIsInitialized [
+AILinearRegressionLeastSquaresTest >> testPredictionWithNonFittedModel [
 
-	self skip
-]
+	| input |
+	input := AIColumnMajorMatrix rows: #(
+		(1 2 3)
+   		(2 3 4)
+		(3 4 5)
+	).
 
-{ #category : 'tests' }
-AILinearRegressionLeastSquaresTest >> testMaxIterationsIsInitialized [
-
-	self skip
-]
-
-{ #category : 'tests' }
-AILinearRegressionLeastSquaresTest >> testPerformedIterationsIsInitialized [
-
-	self skip
-]
-
-{ #category : 'tests' }
-AILinearRegressionLeastSquaresTest >> testWeightDerivativeforXCostDerivative [
-
-	self skip
+	self assert: (model predict: input) equals: Array new
 ]

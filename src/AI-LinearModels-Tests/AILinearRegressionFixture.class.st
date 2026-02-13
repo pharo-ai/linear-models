@@ -26,15 +26,13 @@ AILinearRegressionFixture >> initialize [
 
 	| function |
 	super initialize.
-	
+
 	bias := 3.
 	inputMatrix := #( #( 2 ) #( 3 ) #( 1 ) #( 5 ) #( 2 ) #( 6 ) ).
 	weights := #( 2 ).
-	
-	function := [ :x | ( weights at: 1) * x + self bias ].
+
+	function := [ :x | weights first * x + self bias ].
 	outputVector := inputMatrix collect: [ :x | function value: x first ]
-	
-	
 ]
 
 { #category : 'accessing' }

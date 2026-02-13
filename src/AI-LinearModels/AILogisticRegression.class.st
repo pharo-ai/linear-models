@@ -15,12 +15,14 @@ So, we need to minimize the error of the cost function. To do that, we derive th
 See more information in the comments of the methods.
 "
 Class {
-	#name : #AILogisticRegression,
-	#superclass : #AIAbstractLinearModel,
-	#category : #'AI-LinearModels-Logistic regression'
+	#name : 'AILogisticRegression',
+	#superclass : 'AIAbstractLinearModel',
+	#category : 'AI-LinearModels-Logistic regression',
+	#package : 'AI-LinearModels',
+	#tag : 'Logistic regression'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 AILogisticRegression >> biasDerivative: costDerivativeVector [
 
 	"J(w) = cost function"
@@ -33,7 +35,7 @@ AILogisticRegression >> biasDerivative: costDerivativeVector [
 	^ costDerivativeVector average
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AILogisticRegression >> costDerivative: predictedOutputVector actual: targetOutputVector [
 
 	"h(z) = sigmoid function (see method comment)"
@@ -50,7 +52,7 @@ AILogisticRegression >> costDerivative: predictedOutputVector actual: targetOutp
 	^ predictedOutputVector - targetOutputVector
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AILogisticRegression >> costFunctionX: inputMatrix y: actualValues [
 
 	"The cost function for the logistic regression is defined as:
@@ -77,7 +79,7 @@ AILogisticRegression >> costFunctionX: inputMatrix y: actualValues [
 	^ sum average
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AILogisticRegression >> hypothesisFunction: inputMatrix [
 
 	"The hypothesis function for logistic regression is the logistic function
@@ -95,7 +97,7 @@ AILogisticRegression >> hypothesisFunction: inputMatrix [
 	^ weightedSumVector collect: [ :z | sigmoidFunction value: z ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 AILogisticRegression >> predict: inputMatrix [
 
 	| predictions |
@@ -107,13 +109,13 @@ AILogisticRegression >> predict: inputMatrix [
 			  ifFalse: [ 0 ] ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 AILogisticRegression >> predictProbabilities: inputMatrix [
 
 	^ self hypothesisFunction: inputMatrix 
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AILogisticRegression >> weightDerivativeforX: inputMatrix costDerivative: costDerivativeVector [
 
 	"J(w) = cost function"

@@ -2,12 +2,14 @@
 I am a custom exception that is signaled when the model is starting to diverge (the weights start to grow up to infinity)
 "
 Class {
-	#name : #ModelStartingToDivergeException,
-	#superclass : #Exception,
-	#category : #'AI-LinearModels-Exception'
+	#name : 'ModelStartingToDivergeException',
+	#superclass : 'Exception',
+	#category : 'AI-LinearModels-Exception',
+	#package : 'AI-LinearModels',
+	#tag : 'Exception'
 }
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 ModelStartingToDivergeException >> signal [
 
 	self messageText:
