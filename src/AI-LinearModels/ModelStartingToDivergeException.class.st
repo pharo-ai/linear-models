@@ -3,7 +3,7 @@ I am a custom exception that is signaled when the model is starting to diverge (
 "
 Class {
 	#name : 'ModelStartingToDivergeException',
-	#superclass : 'Exception',
+	#superclass : 'Error',
 	#category : 'AI-LinearModels-Exception',
 	#package : 'AI-LinearModels',
 	#tag : 'Exception'

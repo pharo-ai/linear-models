@@ -81,22 +81,32 @@ AIAbstractLinearModel >> costHistory [
 	^ costHistory
 ]
 
+{ #category : 'accessing' }
+AIAbstractLinearModel >> costHistory: aCollection [
+
+	costHistory := aCollection
+]
+
 { #category : 'api' }
 AIAbstractLinearModel >> fitX: inputMatrix y: actualValues [
 
-	
-	self initializeWeightsOfSize: (inputMatrix anyOne size).
-	
-	costHistory := OrderedCollection new.
-	costHistory add: (self costFunctionX: inputMatrix y: actualValues).
-	
-	performedIterations := 0.
-	
-	[ self hasConverged or: [ performedIterations >= maxIterations ] ] whileFalse: [ 
-		self updateWeightsForX: inputMatrix y: actualValues.
-		costHistory add: (self costFunctionX: inputMatrix y: actualValues).
-		performedIterations := performedIterations + 1 ].
+	self fitX: inputMatrix y: actualValues random: Random new
+]
 
+{ #category : 'api' }
+AIAbstractLinearModel >> fitX: inputMatrix y: actualValues random: aRandom [
+
+	self initializeWeightsOfSize: inputMatrix anyOne size random: aRandom.
+
+	self costHistory: OrderedCollection new.
+	costHistory add: (self costFunctionX: inputMatrix y: actualValues).
+
+	performedIterations := 0.
+
+	[ self hasConverged or: [ performedIterations >= maxIterations ] ] whileFalse: [
+			self updateWeightsForX: inputMatrix y: actualValues.
+			costHistory add: (self costFunctionX: inputMatrix y: actualValues).
+			performedIterations := performedIterations + 1 ]
 ]
 
 { #category : 'testing' }
@@ -133,17 +143,20 @@ AIAbstractLinearModel >> initialize [
 { #category : 'initialization' }
 AIAbstractLinearModel >> initializeRandomWeightsOfSize: aNumber [
 
-	| rand |
-	rand := Random new.
-	
-	bias := rand next.
-	weights := (1 to: aNumber) collect: [ :i | rand next ].
+	self initializeRandomWeightsOfSize: aNumber random: Random new
 ]
 
 { #category : 'initialization' }
-AIAbstractLinearModel >> initializeWeightsOfSize: aNumber [
+AIAbstractLinearModel >> initializeRandomWeightsOfSize: aNumber random: aRandom [
 
-	self initializeRandomWeightsOfSize: aNumber
+	bias := aRandom next.
+	weights := (1 to: aNumber) collect: [ :i | aRandom next ]
+]
+
+{ #category : 'initialization' }
+AIAbstractLinearModel >> initializeWeightsOfSize: aNumber random: random [
+
+	self initializeRandomWeightsOfSize: aNumber random: random
 ]
 
 { #category : 'initialization' }

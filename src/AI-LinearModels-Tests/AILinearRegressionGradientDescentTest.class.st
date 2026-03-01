@@ -28,6 +28,15 @@ AILinearRegressionGradientDescentTest >> testDivergingException [
 ]
 
 { #category : 'tests' }
+AILinearRegressionGradientDescentTest >> testDivergingExceptionWhenCostsIncrease [
+	"Simulates an increase of the cost function and checks that the model raises the diverging error"
+
+	model costHistory: (Array with: 0 with: 0.5).
+
+	self should: [ model hasConverged ] raise: ModelStartingToDivergeException
+]
+
+{ #category : 'tests' }
 AILinearRegressionGradientDescentTest >> testInitializeWeightsToZeroOfSize [
 
 	| expectedInitWeigths |
@@ -35,6 +44,63 @@ AILinearRegressionGradientDescentTest >> testInitializeWeightsToZeroOfSize [
 	model initializeWeightsToZeroOfSize: 3.
 	
 	self assert: model weights equals: expectedInitWeigths   
+]
+
+{ #category : 'tests' }
+AILinearRegressionGradientDescentTest >> testMaxIterationsReached [
+	"Checks that the model performs the maximum number of iterations given and not more nor less"
+
+	model maxIterations: 10.
+
+	model fitX: self fixtureInput y: self fixtureOutput.
+
+	self assert: model performedIterations equals: model maxIterations
+]
+
+{ #category : 'tests' }
+AILinearRegressionGradientDescentTest >> testModelHasConvergedWhenCostDifferenceIsZero [
+	"Simulates a stabilisation of the cost function and checks that the model reached convergence"
+
+	model costHistory: (Array with: 10 with: 10).
+
+	self assert: model hasConverged
+]
+
+{ #category : 'tests' }
+AILinearRegressionGradientDescentTest >> testModelHasConvergedWhenLastCostIsZero [
+	"Checks that the model reaches convergence when the cost function reaches 0"
+
+	model costHistory: (Array with: 10 with: 0).
+
+	self assert: model hasConverged
+]
+
+{ #category : 'tests' }
+AILinearRegressionGradientDescentTest >> testModelHasNotConvergedWithEmptyCostHistory [
+	"Checks that the model doesn't converge when the history of the cost function results is empty"
+
+	model costHistory: OrderedCollection new.
+
+	self deny: model hasConverged
+]
+
+{ #category : 'tests' }
+AILinearRegressionGradientDescentTest >> testModelHasNotConvergedWithNoCostHistory [
+	"Checks that the model doesn't converge when there isn't a history of the cost function results"
+
+	self deny: model hasConverged
+]
+
+{ #category : 'tests' }
+AILinearRegressionGradientDescentTest >> testNegativeMaxIterations [
+	"Checks that the model doesn't perform iterations and doesn't add new cost function result when it is given negative max iterations number"
+
+	model maxIterations: -1.
+
+	model fitX: self fixtureInput y: self fixtureOutput.
+
+	self assert: model performedIterations equals: 0.
+	self assert: model costHistory size equals: 1
 ]
 
 { #category : 'tests' }

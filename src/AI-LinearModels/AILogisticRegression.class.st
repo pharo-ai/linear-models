@@ -62,15 +62,15 @@ AILogisticRegression >> costFunctionX: inputMatrix y: actualValues [
 	"Which can be rewritten as:
 	J(x) = - ylog( h(x) ) - ( 1 - y )log( 1 - h(x) )"
 
-	| predictedValues costFunctionIfYIs1 costFunctionIfYIs0 sum costFunction |
+	| predictedValues sum costFunction |
 	predictedValues := self hypothesisFunction: inputMatrix.
 	costFunction := [ :actual :predicted | (actual * predicted ln) negated - ((1 - actual) * (1 - predicted) ln) ].
 	"costFunction := [ :actual :predicted |
 		(actual = 1.0)
 			ifTrue: [ costFunctionIfYIs1 value: predicted ]
-			ifFalse: [ costFunctionIfYIs0 value: predicted ] ]."
+			ifFalse: [ costFunctionIfYIs0 value: predicted ] ].
 	costFunctionIfYIs1 := [ :predicted | predicted ln negated ].
-	costFunctionIfYIs0 := [ :predicted | (1 - predicted) ln negated ].
+	costFunctionIfYIs0 := [ :predicted | (1 - predicted) ln negated ]."
 
 	sum := actualValues
 		with: predictedValues

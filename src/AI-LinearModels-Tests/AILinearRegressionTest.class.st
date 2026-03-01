@@ -8,10 +8,7 @@ Class {
 { #category : 'running' }
 AILinearRegressionTest >> regression [
 
-	^ AILinearRegression new
-		learningRate: 0.1;
-		maxIterations: 3000;
-		yourself
+	^ AILinearRegression learningRate: 0.1 maxIterations: 3000
 ]
 
 { #category : 'tests' }
@@ -53,6 +50,19 @@ AILinearRegressionTest >> testExactFitSingleVariable [
 	actualOutput := model predict: newInput.
 
 	actualOutput with: expectedOutput do: [ :actual :expected | self assert: actual closeTo: expected precision: 0.001 ]
+]
+
+{ #category : 'tests' }
+AILinearRegressionTest >> testFixedIterations [
+	"Checks that the model, with a given input and a fixed random number generator, always converges with the same amount of iterations"
+
+	| expected |
+	model fitX: self fixtureInput y: self fixtureOutput random: (Random seed: 42).
+	expected := (SystemVersion current version beginsWith: 'Pharo11')
+		            ifTrue: [ 432 ]
+		            ifFalse: [ 424 ].
+
+	self assert: model performedIterations equals: expected
 ]
 
 { #category : 'tests' }
